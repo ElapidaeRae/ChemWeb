@@ -14,21 +14,7 @@
 	// Subscribe to the search query
 	search.subscribe(value => {
 		console.log(value);
-		// Send the search query to the server
-		fetch(apiroute, {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({ query: value })
-		})
-			.then(response => response.json())
-			.then(data => {
-				console.log(data);
-			})
-			.catch(error => {
-				console.error('Error:', error);
-			});
+		// TODO: Send the search query to the server
 	});
 </script>
 
