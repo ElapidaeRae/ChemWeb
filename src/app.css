@@ -61,6 +61,10 @@
   }
   .dark {
     --text: #faf7f5;
+    --background: #0e0907;
+    --primary: #46dddd;
+    --secondary: #6c6c65;
+    --accent: #fb7e18;
 
     --background-50: #110b09;
     --background-100: #221611;
