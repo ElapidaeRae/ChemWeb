@@ -1,6 +1,7 @@
 <!-- Dark mode Toggle Switch -->
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import { writable } from 'svelte/store';
 
 	let cookies = {
 		set: (name: string, value: any) => {
@@ -31,10 +32,10 @@
 		}
 	}
 
-
 </script>
 
-<div class="flex items-center space-x-2">
-	<button class="text-text border-4 border-primary rounded-lg p-1" on:click={() => DarkModeToggle(cookies.get('darkMode'))}>Dark Mode</button>
-</div>
+<button class="text-text border-4 border-primary rounded-lg p-1" on:click={() => DarkModeToggle(cookies.get('darkMode'))}>
+<!--	<input type="checkbox" bind:value={darkMode}>-->
+	Dark Mode
+</button>
 

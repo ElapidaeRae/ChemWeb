@@ -14,12 +14,12 @@
 	// Subscribe to the search query
 	search.subscribe(value => {
 		console.log(value);
-		// TODO: Send the search query to the server
+		// TODO: Send the search query to the api server
 	});
 </script>
 
-<div class="w-80 p-2">
-	<input type="text" placeholder="Search" class="w-auto p-2 rounded-lg caret-accent flex-grow" bind:value={$search} />
+<div class="p-2 px-8 flex">
+	<input type="text" placeholder="Search..." class="w-auto p-2 rounded-lg caret-accent max-sm:hidden" bind:value={$search} />
 </div>
 
 
