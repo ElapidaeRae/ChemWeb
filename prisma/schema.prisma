@@ -1,0 +1,77 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id             String   @id @default(cuid())
+  email          String   @unique
+  username       String?
+  password       String
+  createdmethods Method[]
+  allowedmethods Method[] @relation("AllowedUsers")
+  createdat      DateTime @default(now())
+  role           String   @default("user")
+  profile        Profile?
+}
+
+model Method {
+  id            String    @id @default(cuid())
+  creator       User      @relation(fields: [userId], references: [id])
+  userId        String
+  allowedusers  User[]    @relation("AllowedUsers")
+  name          String
+  description   String?
+  public        Boolean   @default(false)
+  createdat     DateTime  @default(now())
+  steps         Step[]
+  tags          Tag[]
+  likes         Int       @default(0)
+  original      Boolean   @default(true)
+  forkedfrom    Method?   @relation("ForkedMethods", fields: [forkedFromId], references: [id])
+  forkedFromId  String?
+  forkedmethods Method[]  @relation("ForkedMethods")
+  forkedat      DateTime?
+}
+
+model Step {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  order       Int
+  createdat   DateTime @default(now())
+  method      Method   @relation(fields: [methodId], references: [id])
+  methodId    String
+}
+
+model Profile {
+  id     String  @id @default(cuid())
+  user   User    @relation(fields: [userId], references: [id])
+  userId String  @unique
+  name   String?
+  bio    String?
+  avatar String?
+  badges Badge[]
+}
+
+model Tag {
+  id     String   @id @default(cuid())
+  name   String   @unique
+  method Method[]
+}
+
+// The badges that a user can earn
+// A user can earn multiple badges and a badge can be earned by multiple users
+// The badge shouldn't know about the user, but the user should know about the badge
+model Badge {
+  name     String    @id @unique
+  users    Profile[]
+  criteria String
+}

@@ -17,9 +17,9 @@
 </script>
 
 <div class="flex items-center" on:focusout={dropdownLostFocus}>
-	<div class="flex flex-col menu bg-background rounded-lg shadow-lg p-2 relative translate-y-20 translate-x-10 " style:visibility={dropdownState ? 'visible' : 'hidden'}>
+	<div class="flex flex-col menu bg-background rounded-lg shadow-lg shadow-accent p-2 relative translate-y-20 translate-x-8 items-center" style:visibility={dropdownState ? 'visible' : 'hidden'}>
 		<DarkModeToggle />
-		<a href="/account" class="text-text">Account</a>
+		<a href="/settings" class="text-text">Settings</a>
 		<a href="/logout" class="text-text">Logout</a>
 	</div>
 

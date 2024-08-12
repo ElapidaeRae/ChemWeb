@@ -29,6 +29,15 @@
 		.catch(error => {
 			console.error(error);
 		});
+	const method = {
+		name: 'Hydrazine',
+		description: 'A simple method for synthesizing hydrazine from ammonia and bleach.',
+		author: 'John Chemistry',
+		date: '2021-10-01',
+		tags: ['Nitrogen', 'Volatile', 'Simple', 'Dangerous'],
+		picture: '/src/lib/Hydrazine_Conformer3D_medium.png',
+		id: 1
+	};
 
 </script>
 
@@ -38,15 +47,14 @@
 		<div class="flex flex-col md:flex-row">
 			<Carousel images={['/src/lib/Hydrazine_Conformer3D_medium.png', '/src/lib/ChemWebWordLogoBorder.svg', '/src/lib/Hydrazine_Conformer3D_medium.png']} />
 			<div class="bg-accent rounded-lg p-4 md:w-1/3">
-				<h2 class="text-text text-lg font-bold">Hydrazine</h2>
-				<p class="text-text text-sm">A simple method for synthesizing hydrazine from ammonia and bleach.</p>
-				<p class="text-text text-sm">Author: John Chemistry</p>
-				<p class="text-text text-sm">Date: 2021-10-01</p>
+				<h2 class="text-text text-lg font-bold">{method.name}</h2>
+				<p class="text-text text-sm">{method.description}</p>
+				<p class="text-text text-sm">by {method.author}</p>
+				<p class="text-text text-sm">Published: {method.date}</p>
 				<div class="flex flex-wrap">
-					<span class="text-text text-sm bg-primary rounded-lg p-1 m-1">Nitrogen</span>
-					<span class="text-text text-sm bg-primary rounded-lg p-1 m-1">Volatile</span>
-					<span class="text-text text-sm bg-primary rounded-lg p-1 m-1">Simple</span>
-					<span class="text-text text-sm bg-primary rounded-lg p-1 m-1">Dangerous</span>
+					{#each method.tags as tag}
+						<span class="text-text text-sm bg-primary rounded-lg p-1 m-1">{tag}</span>
+					{/each}
 				</div>
 			</div>
 		</div>

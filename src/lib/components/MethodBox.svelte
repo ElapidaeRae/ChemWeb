@@ -16,11 +16,11 @@
 
 <div class="p-2 break-inside-avoid">
 	<a href="/method:{method.id}" class="w-full">
-	<div class="bg-accent w-full rounded-lg p-4">
-		<h2 class="text-text text-lg font-bold">{method.name} {temp}</h2>
+	<div class="bg-secondary w-full rounded-lg p-4 ring ring-accent">
+		<h2 class="text-text text-lg font-bold tracking-wide">{method.name} {temp}</h2>
 		<p class="text-text text-sm">by {method.author}</p>
 		<img src={method.picture} alt="Method Picture" class="w-full h-64 object-none overflow-clip" />
-		<p class="text-text text-sm">{method.description}</p>
+		<p class="text-text text-sm line-clamp-4">{method.description}</p>
 		<div class="flex flex-wrap">
 			{#each method.tags as tag}
 				<span class="text-text text-sm bg-primary rounded-lg p-1 m-1">{tag}</span>

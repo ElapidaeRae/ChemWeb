@@ -81,7 +81,7 @@
 	{#if images.length > 0}
 		{#if loop}
 			{#if controls}
-				<button class="absolute top-1/2 left-0 transform -translate-y-1/2" on:click={previousImage}>
+				<button class="text-text absolute top-1/2 left-0 transform -translate-y-1/2" on:click={previousImage}>
 					<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
 						<path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
 					</svg>
@@ -90,12 +90,12 @@
 			{#if indicators}
 				<div class="absolute bottom-0 left-1/2 transform -translate-x-1/2">
 					{#each images as image, index}
-						<button class="p-1 m-1 rounded-full bg-background text-text" on:click={() => goToImage(index)}>{index + 1}</button>
+						<button class="p-1 m-1 rounded-full bg-accent text-text" on:click={() => goToImage(index)}>{index + 1}</button>
 					{/each}
 				</div>
 			{/if}
 			{#if controls}
-				<button class="absolute top-1/2 right-0 transform -translate-y-1/2" on:click={nextImage}>
+				<button class="text-text absolute top-1/2 right-0 transform -translate-y-1/2" on:click={nextImage}>
 					<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
 						<path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
 					</svg>

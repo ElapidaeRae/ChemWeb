@@ -7,11 +7,6 @@
 </script>
 
 
-<div class="flex justify-start bg-secondary">
-	<a href="#" class="text-text p-1">Home</a>
-	<a href="#" class="text-text p-1">Methods</a>
-	<a href="settings" class="text-text p-1">Settings</a>
-</div>
 <div class="flex flex-row justify-between items-center bg-secondary shadow-lg rounded-b-lg sticky -top-1 h-20">
 	<!-- The Logo of the website, linking to the home page-->
 	<a href="/" class="px-2 inline">
@@ -19,11 +14,9 @@
 	</a>
 	<!-- The Search Bar, allowing users to search for methods across the website with a dropdown menu for filters-->
 	<SearchBar />
-	<!-- TODO: Make a profile menu dropdown that contains the user's settings information and settings-->
 	<ProfileMenu />
 </div>
 <!--</nav>-->
 
 <slot></slot>
 
-<style></style>
