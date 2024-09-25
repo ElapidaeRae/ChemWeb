@@ -1,7 +1,7 @@
 <script>
-	import '../app.css';
+	import '../styles.css';
 	import logo from '$lib/ChemWebWordLogo.svg';
-	import SearchBar from '$lib/components/SearchBar.svelte';
+	import SearchBar from '$lib/components/LayoutSearchBar.svelte';
 	import ProfileMenu from '$lib/components/ProfileMenu.svelte';
 	import DarkModeToggle from '$lib/components/DarkModeToggle.svelte';
 </script>

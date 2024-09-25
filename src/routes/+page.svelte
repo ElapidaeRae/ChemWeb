@@ -7,7 +7,15 @@
 
 <script lang="ts">
 	import MethodBox from '$lib/components/MethodBox.svelte';
+	import { onMount } from 'svelte';
 
+	onMount(() => {
+		console.log('Page mounted');
+	});
+
+	$: console.log('Page updated');
+
+	// TODO: Dynamically load methods from the database
 </script>
 
 <body class="bg-background">

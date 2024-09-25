@@ -32,6 +32,8 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@prisma/client": "^5.17.0",
+		"@rdkit/rdkit": "^2024.3.5-1.0.0",
 		"ketcher-core": "^2.21.0"
 	}
 }

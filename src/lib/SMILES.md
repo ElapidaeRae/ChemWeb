@@ -23,6 +23,7 @@ Bond types are represented by the following symbols:
 - Single bond: `-`
 - Double bond: `=`
 - Triple bond: `#`
+- Quadruple bond: `$`
 - Aromatic bond: `:`
 - Any bond: `~`
 - No bond: `.`
