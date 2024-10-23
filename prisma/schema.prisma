@@ -1,64 +1,50 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
 
 generator client {
   provider = "prisma-client-js"
 }
 
-datasource db {
-  provider = "sqlite"
-  url      = env("DATABASE_URL")
-}
+// This is your Prisma schema file,
+// learn more about it in the docs: https://www.prisma.io/docs/orm/prisma-schema/
 
 model User {
   id             String        @id @default(cuid())
   email          String        @unique
   username       String?
   password       String
-  createdmethods Method[]
-  allowedmethods Method[]      @relation("AllowedUsers")
+  createdmethods Method[]      @relation(name: "MethodToUser")
   createdat      DateTime      @default(now())
   role           String        @default("user")
-  profile        Profile?
-  settings       UserSettings?
-  Comment        Comment[]
+  profile        Profile?      @relation(name: "ProfileToUser")
+  settings       UserSettings? @relation(name: "UserToUserSettings")
+  Comment        Comment[]     @relation(name: "CommentToUser")
 }
 
 model Method {
-  id              String        @id @default(cuid())
-  creator         User          @relation(fields: [userId], references: [id])
-  userId          String
-  allowedusers    User[]        @relation("AllowedUsers")
+  id              String         @id @default(cuid())
+  creator         User[]         @relation(name: "MethodToUser")
   name            String
   description     String?
-  public          Boolean       @default(false)
-  steps           Step[]
-  original        Boolean       @default(true)
-  MethodDetails   MethodDetails @relation(fields: [methodDetailsId], references: [id])
-  methodDetailsId String        @unique
-  Forks           Fork[]
-  Comment         Comment[]
-  Fork            Fork[]        @relation("Parent")
-  ForkChild       Fork[]        @relation("Child")
-}
-
-model Fork {
-  id       String  @id @default(cuid())
-  parent   Method  @relation(fields: [parentId], references: [id], name: "Parent")
-  parentId String
-  child    Method  @relation(fields: [childId], references: [id], name: "Child")
-  childId  String
-  Method   Method? @relation(fields: [methodId], references: [id])
-  methodId String?
+  public          Boolean        @default(false)
+  steps           Step[]         @relation(name: "MethodToStep")
+  original        Boolean        @default(true)
+  MethodDetails   MethodDetails  @relation(name: "MethodToMethodDetails", fields: [methodDetailsId], references: [id])
+  methodDetailsId String         @unique
+  Comment         Comment[]      @relation(name: "CommentToMethod")
+  methoddetailsId String?
+  forks           MethodDetails? @relation(name: "MethodToMethodDetailsforks", fields: [methoddetailsId], references: [id])
 }
 
 model MethodDetails {
-  id        String    @id @default(cuid())
-  createdat DateTime  @default(now())
-  tags      Tag[]
-  likes     Int       @default(0)
-  comments  Comment[]
-  Method    Method?
+  id        String   @id @default(cuid())
+  createdat DateTime @default(now())
+  tags      Tag[]    @relation(name: "MethodDetailsToTag")
+  likes     Int      @default(0)
+  Method    Method?  @relation(name: "MethodToMethodDetails")
+  forks     Method[] @relation(name: "MethodToMethodDetailsforks")
 }
 
 model Step {
@@ -67,48 +53,45 @@ model Step {
   description String?
   order       Int
   createdat   DateTime @default(now())
-  method      Method   @relation(fields: [methodId], references: [id])
+  method      Method   @relation(name: "MethodToStep", fields: [methodId], references: [id])
   methodId    String
 }
 
 model Profile {
   id     String  @id @default(cuid())
-  user   User    @relation(fields: [userId], references: [id])
+  user   User    @relation(name: "ProfileToUser", fields: [userId], references: [id])
   userId String  @unique
-  name   String?
   bio    String?
-  avatar String?
-  badges Badge[]
+  avatar Bytes?
+  badges Badge[] @relation(name: "BadgeToProfile")
 }
 
 model Tag {
   id              String         @id @default(cuid())
   name            String         @unique
-  MethodDetails   MethodDetails? @relation(fields: [methodDetailsId], references: [id])
+  MethodDetails   MethodDetails? @relation(name: "MethodDetailsToTag", fields: [methodDetailsId], references: [id])
   methodDetailsId String?
 }
 
 model Badge {
-  name     String    @id @unique
-  users    Profile[]
-  criteria String
+  name        String    @id @default(cuid())
+  users       Profile[] @relation(name: "BadgeToProfile")
+  description String    @unique
 }
 
 model UserSettings {
-  user           User   @relation(fields: [userId], references: [id])
-  userId         String @unique
-  defaultPrivacy String @default("private")
+  user    User     @relation(name: "UserToUserSettings", fields: [userId], references: [id])
+  userId  String   @unique
+  private Boolean? @default(false)
 }
 
 model Comment {
-  id              String         @id @default(cuid())
-  user            User           @relation(fields: [userId], references: [id])
-  userId          String
-  method          Method         @relation(fields: [methodId], references: [id])
-  methodId        String
-  content         String
-  createdat       DateTime       @default(now())
-  likes           Int            @default(0)
-  MethodDetails   MethodDetails? @relation(fields: [methodDetailsId], references: [id])
-  methodDetailsId String?
+  id        String   @id @default(cuid())
+  user      User     @relation(name: "CommentToUser", fields: [userId], references: [id])
+  userId    String
+  method    Method   @relation(name: "CommentToMethod", fields: [methodId], references: [id])
+  methodId  String
+  content   String
+  createdat DateTime @default(now())
+  likes     Int      @default(0)
 }
