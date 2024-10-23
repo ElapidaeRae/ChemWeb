@@ -3,8 +3,8 @@
 </script>
 
 <body class="bg-background">
-	<main class="grid min-h-full place-items-center bg-white px-6 py-24 sm:py-32 lg:px-8">
-		<div class="text-center">
+	<main class="grid h-screen place-items-center bg-white px-6 py-24 sm:py-32 lg:px-8">
+		<div class="text-center mb-auto">
 			<p class="text-base font-semibold text-accent">{$page.status}</p>
 			<h1 class="mt-4 text-3xl font-bold font-heading tracking-tight text-text sm:text-5xl">{$page.error.message}</h1>
 			<p class="mt-6 text-base leading-7 text-text">Sorry, an error seems to have occurred.</p>

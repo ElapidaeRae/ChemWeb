@@ -1,0 +1,16 @@
+<script>
+import logo from '$lib/ChemWebWordLogo.svg';
+import SearchBar from '$lib/components/LayoutSearchBar.svelte';
+import ProfileMenu from '$lib/components/ProfileMenu.svelte';
+</script>
+
+<div class="flex flex-row justify-between items-center bg-secondary shadow-lg rounded-b-lg sticky -top-1 h-20">
+	<!-- The Logo of the website, linking to the home page-->
+	<a href="/" class="px-2 inline">
+		<img src={logo} alt="ChemWeb" class="md:h-12 h-8 min-h-6 text-primary font-heading" />
+	</a>
+	<span class="flex">
+		<SearchBar />
+	</span>
+	<ProfileMenu />
+</div>

@@ -13,13 +13,14 @@
 
 	const dispatch = createEventDispatcher();
 
+	export let text = 'Click to lift the lid';
 
 </script>
 
 <div id="BigRedButton">
 	{#if buttonState === ButtonState.Idle}
 		<button class="rounded bg-accent">
-			Click to lift the lid
+			{text}
 		</button>
 	{/if}
 

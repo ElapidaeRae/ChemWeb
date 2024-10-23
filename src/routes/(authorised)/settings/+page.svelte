@@ -5,16 +5,20 @@
 <script lang="ts">
 	// Different components will be imported to be used in the settings page
 	// Buttons on the left will change the displayed component on the right
-	import { onMount } from 'svelte';
-	import { createEventDispatcher } from 'svelte';
 	import BigRedButton from '$lib/components/BigRedButton.svelte';
-	import { Account } from './menus';
+	import "./[menu]";
+	import Account from './[menu]/Account.svelte';
 
 	// TODO: Fill the settings components with actual content
 </script>
 
 <body>
 	<main class="bg-background">
+		<div class="grid grid-cols-3 gap-4">
+			<div class="col-span-1">
+				<BigRedButton text="Account" />
+			</div>
 		<Account />
+		</div>
 	</main>
 </body>

@@ -4,8 +4,6 @@
 <!-- This component will be used in the header of the website -->
 
 <script lang="ts">
-	import { goto } from '$app/navigation';
-	import { onMount } from 'svelte';
 	import { createEventDispatcher } from 'svelte';
 	import DropdownSelect from '$lib/components/DropdownSelect.svelte';
 
@@ -19,13 +17,10 @@
 		{ label: 'All', value: 'all' },
 		{ label: 'Name', value: 'name' },
 		{ label: 'Author', value: 'author' },
-		{ label: 'Tag', value: 'tag' },
-		{ label: 'Structure', value: 'structure' }
+		{ label: 'Tag', value: 'tag' }
 	];
 
 	// Get the current search type from the dropdown
-
-
 
 	const dispatch = createEventDispatcher();
 
@@ -36,15 +31,15 @@
 </script>
 
 <div class="flex content-center">
-	<DropdownSelect options={searchTypes} />
 
 	<div class="flex items-center">
-		<input type="text" class="border-r-2 border-accent rounded-lg m-2" bind:value={searchQuery} placeholder="Search" />
+	<DropdownSelect options={searchTypes} styling=""/>
+		<input type="search" class="border-r-2 border-accent rounded-lg m-2" bind:value={searchQuery} placeholder="Search" />
+		<button class="border-2 border-accent rounded-lg p-1 m-2" on:click={search}>
+			<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+				<path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+			</svg>
+		</button>
 	</div>
 
-	<button class="border-2 border-accent rounded-lg px-2 m-2" on:click={search}>
-		<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-			<path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
-		</svg>
-	</button>
 </div>
