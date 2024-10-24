@@ -1,20 +1,39 @@
-
+// declare type User = {
+// 		id: string;
+// 		email: string;
+// 		username: string;
+// 		password: string;
+// 		createdMethods: Method[];
+// 		createdAt: Date;
+// 		role: 'user' | 'admin';
+// 		profile: Profile;
+// 	}
 
 declare type User = {
-		id: number;
-		email: string;
-		username: string;
-		password: string;
-		createdMethods: Method[];
-		allowedMethods: Method[];
-		createdAt: Date;
-		role: 'user' | 'admin';
-		profile: Profile;
-	}
+  id: string
+  email: string
+  username: string
+  password: string
+  createdat: number
+  role: string
+  Comment: Comment[]
+  profile: Profile
+  settings: UserSettings
+  createdmethods: Method[]
+}
+
+declare type Profile = {
+	id: string
+	userId: number
+	bio: string
+	avatar: string
+	user: User
+	badges: Badge[]
+}
 
 
 declare type Method = {
-  id: number;
+  id: string;
 	creator: User;
 	userId: number;
 	allowedusers: User[];
