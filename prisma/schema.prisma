@@ -32,7 +32,8 @@ model Method {
   forks           MethodDetails? @relation("MethodToMethodDetailsforks", fields: [methodforkid], references: [id])
   MethodDetails   MethodDetails  @relation("MethodToMethodDetails", fields: [methodDetailsId], references: [id])
   steps           Step[]         @relation("MethodToStep")
-  creator         User[]         @relation("MethodToUser")
+  creator         User           @relation("MethodToUser", fields: [userId], references: [id])
+  userId          String
 }
 
 model MethodDetails {

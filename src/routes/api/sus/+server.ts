@@ -1,11 +1,11 @@
 // api endpoint to return ඞ
 
-response = {'ඞ': 'ඞ'}
 
-export function post(req: Request, res: Response) {
-		return new Response(JSON.stringify(response), {
-			headers: {
-				'content-type': 'application/json'
-			}
-		});
+export function POST(req: Request, res: Response) {
+	const response = 'ඞ'
+	return new Response(response, {
+		headers: {
+			'content-type': 'application/json'
+		}
+	});
 }

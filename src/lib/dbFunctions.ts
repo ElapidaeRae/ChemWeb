@@ -24,19 +24,30 @@ export async function addUser( username: string, email: string, password: string
 	});
 }
 
-export async function addMethod( name: string, description: string, creators: User[] ) {
+export async function addMethod( name: string, description: string, creator: User ) {
 	const method = await prisma.method.create({
 		data: {
 			name: name,
 			description: description,
 			creator: {
-				connectOrCreate: creators.map(creator => {
-					return {
-						where: { id: creator.id },
-						create: creator
-					};
-				})
-			},
+				connect: {
+					id: creator.id
+				}
+			}
 		}
 	});
 }
+
+export async function searchMethods( query: string ) {
+	return prisma.method.findMany({
+		where: {
+			OR: [
+				{ name: { contains: query } },
+				{ description: { contains: query } }
+			]
+		}
+	});
+}
+
+
+
