@@ -13,10 +13,10 @@
 </script>
 
 <body>
-	<main class="bg-background">
+	<main class="bg-background p-4">
 		<div class="grid grid-cols-3 gap-4">
-			<div class="col-span-1">
-				<BigRedButton text="Account" />
+			<div class="col-span-1 p-2">
+				Testing
 			</div>
 		<Account />
 		</div>

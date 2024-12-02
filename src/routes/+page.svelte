@@ -20,7 +20,7 @@
 
 <body class="bg-background">
 	<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 p-2 ">
-		{#each {length: 71} as _, i}
+		{#each {length: 72} as _, i}
 			<MethodBox temp="{i}"/>
 		{/each}
 	</div>

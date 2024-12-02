@@ -37,12 +37,13 @@ model Method {
 }
 
 model MethodDetails {
-  id        String   @id @default(cuid())
-  createdat DateTime @default(now())
-  likes     Int      @default(0)
-  forks     Method[] @relation("MethodToMethodDetailsforks")
-  Method    Method?  @relation("MethodToMethodDetails")
-  tags      Tag[]    @relation("MethodDetailsToTag")
+  id             String   @id @default(cuid())
+  createdat      DateTime @default(now())
+  likes          Int      @default(0)
+  forks          Method[] @relation("MethodToMethodDetailsforks")
+  Method         Method?  @relation("MethodToMethodDetails")
+  tags           Tag[]    @relation("MethodDetailsToTag")
+  carouselImages Images[] @relation("ImagesToMethodDetails")
 }
 
 model Step {
@@ -92,4 +93,13 @@ model Comment {
   likes     Int      @default(0)
   method    Method   @relation("CommentToMethod", fields: [methodId], references: [id])
   user      User     @relation("CommentToUser", fields: [userId], references: [id])
+}
+
+model Images {
+  id              String        @id @default(cuid())
+  url             String?
+  raw             Bytes?
+  alt             String?
+  methodDetailsId String
+  MethodDetails   MethodDetails @relation("ImagesToMethodDetails", fields: [methodDetailsId], references: [id])
 }

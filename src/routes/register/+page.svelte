@@ -1,7 +1,7 @@
 <script lang="ts">
 	// Registration page
 	// This page will allow the user to register for an account on the website
-	const argon2 = require('argon2');
+
 
 
 </script>
@@ -9,7 +9,12 @@
 <body>
 	<main class="bg-background">
 		<div>
-			<form class="p-2" method="post" action="?/register">
+			<h1>
+				Register
+			</h1>
+		</div>
+		<div>
+			<form class="p-2" method="post">
 				<label for="username" class="block text-text text-sm">Username</label>
 				<input type="text" id="username" name="username" class="w-full p-2 rounded-md" />
 

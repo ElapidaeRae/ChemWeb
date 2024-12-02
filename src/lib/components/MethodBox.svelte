@@ -1,5 +1,6 @@
 <script lang="ts">
 	import picture from '$lib/Hydrazine_Conformer3D_medium.png';
+	import { prisma } from '$lib/prisma';
 	export let temp = '';
 	// Temporary data for the method box
 	let method = {
@@ -7,10 +8,31 @@
 		description: 'A simple method for synthesizing hydrazine from ammonia and bleach.',
 		author: 'John Chemistry',
 		date: '2021-10-01',
-		tags: ['Nitrogen', 'Volatile', 'Simple', 'Dangerous'],
 		picture: picture,
-		id: 1
+		id: '1a',
+		MethodDetails: {
+			likes: 0,
+			tags: ['Nitrogen', 'Volatile', 'Simple', 'Dangerous']
+		}
 	};
+
+	// Like the method, increment the likes count by 1 and update the database accordingly
+	function likeMethod() {
+		method.MethodDetails.likes++;
+		console.log('Liked method:', method.name);
+		prisma.method.update({
+			where: {
+				id: method.id
+			},
+			include: {
+				MethodDetails: true
+			},
+			data: {
+				likes: method.MethodDetails.likes
+			}
+		});
+	}
+	let b64img = 5
 
 </script>
 
@@ -19,10 +41,10 @@
 	<div class="bg-secondary w-full rounded-lg p-4 ring ring-accent">
 		<h2 class="text-text text-lg font-bold tracking-wide">{method.name} {temp}</h2>
 		<p class="text-text text-sm">by {method.author}</p>
-		<img src={method.picture} alt="Method Picture" class="w-full h-64 object-none overflow-clip" />
+		<img src={method.picture} alt="Method Product" class="w-full h-64 object-none overflow-clip" />
 		<p class="text-text text-sm line-clamp-4">{method.description}</p>
 		<div class="flex flex-wrap">
-			{#each method.tags as tag}
+			{#each method.MethodDetails.tags as tag}
 				<span class="text-text text-sm bg-primary rounded-lg p-1 m-1">{tag}</span>
 			{/each}
 		</div>

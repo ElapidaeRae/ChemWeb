@@ -1,4 +1,6 @@
 import { prisma } from '$lib/prisma';
+import argon2 from 'argon2';
+import { createUser } from '$lib/database';
 
 export function load ({ cookies }) {
 	if (cookies.token) {
@@ -7,13 +9,9 @@ export function load ({ cookies }) {
 }
 
 export const actions = {
-	default: async ({ cookies, request }) => {
-		const data = await request.formdata();
-		prisma.user.create({
-			data: {
-				email: data.get('email'),
-				password: data.get('password')
-			}
-		});
+	default: async ({ request }) => {
+		const data = await request.formData();
+		console.log(data)
+		await createUser(data.get('email'), data.get('username'), data.get('string'))
 	}
 }
