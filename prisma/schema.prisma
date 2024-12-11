@@ -43,7 +43,7 @@ model MethodDetails {
   forks          Method[] @relation("MethodToMethodDetailsforks")
   Method         Method?  @relation("MethodToMethodDetails")
   tags           Tag[]    @relation("MethodDetailsToTag")
-  carouselImages Images[] @relation("ImagesToMethodDetails")
+  carouselImages Image[]  @relation("ImagesToMethodDetails")
 }
 
 model Step {
@@ -95,7 +95,7 @@ model Comment {
   user      User     @relation("CommentToUser", fields: [userId], references: [id])
 }
 
-model Images {
+model Image {
   id              String        @id @default(cuid())
   url             String?
   raw             Bytes?

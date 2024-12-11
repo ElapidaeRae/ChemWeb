@@ -5,18 +5,42 @@ export async function createUser(email: string, username: string, password: stri
 	// hash password with argon2
 	const hashedPassword = await argon2.hash(password);
 
-	return prisma.user.create({
-		data: {
-			email,
-			password: hashedPassword
-		}
-	});
+	// check if user already exists
+	let users = await getUsersByUsername(username);
+	if (users.length > 1) {
+		throw new Error('Database Error');
+	}
+	if (users.length == 0) {
+		return prisma.user.create({
+			data: {
+				email,
+				username,
+				password: hashedPassword
+			}
+		});
+	}
+	else throw new Error('User Already Exists')
 }
 
-export async function getUserByEmail(email: string) {
-	return prisma.user.findUnique({
+export async function authenticateUser(username: string, password: string) {
+	let users = await getUsersByUsername(username)
+	if (users.length == 0){
+		return [false, 'User doesn\'t exist']
+	}
+	else if (users.length > 1){
+		return [false, 'Database Error']
+	}
+	let valid = await argon2.verify(users[0].password, password)
+	if (!valid){
+		return [valid, 'Invalid Password']
+	}
+	else return [valid, 'Success']
+}
+
+export async function getUsersByUsername(username: string) {
+	return prisma.user.findMany({
 		where: {
-			email
+			username
 		}
 	});
 }

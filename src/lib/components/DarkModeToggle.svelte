@@ -3,11 +3,11 @@
 	import { onMount } from 'svelte';
 
 	let cookies = {
-		set: (name: string, value: any) => {
-			document.cookie = `${name}=${value}; path=/`;
+		set: (value: any) => {
+			document.cookie = `darkMode=${value}; path=/`;
 		},
 		get: (name: string) => {
-			let cookie = document.cookie.split(';').find(cookie => cookie.includes(name));
+			let cookie = document.cookie.split(';').find(cookie => cookie.startsWith(name));
 			if (cookie) {
 				return cookie.split('=')[1] === 'true';
 			}
@@ -24,10 +24,10 @@
 	export function DarkModeToggle(cookie: boolean) {
 		if (cookie === true) {
 			document.querySelector('body').classList.remove('dark');
-			cookies.set('darkMode', false);
+			cookies.set(false);
 		} else {
 			document.querySelector('body').classList.add('dark');
-			cookies.set('darkMode', true);
+			cookies.set(true);
 		}
 	}
 
