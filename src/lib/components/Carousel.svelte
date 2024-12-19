@@ -10,7 +10,6 @@
 	// - pause: a boolean to enable or disable pause on hover
 
 	import { onMount, onDestroy } from 'svelte';
-	import { slide } from 'svelte/transition';
 
 
 	export let images: string[] = [];
@@ -103,7 +102,7 @@
 			{/if}
 		{/if}
 		<div class="flex justify-center items-center h-96">
-			<img src={images[currentImage]} alt="Carousel Image" class="object-center object-scale-down h-4/5" on:mouseenter={handleMouseEnter} on:mouseleave={handleMouseLeave} />
+			<img src={images[currentImage]} alt="Carousel" class="object-center object-scale-down h-4/5" on:mouseenter={handleMouseEnter} on:mouseleave={handleMouseLeave} />
 		</div>
 	{/if}
 </div>

@@ -24,6 +24,7 @@ model Method {
   id              String         @id @default(cuid())
   name            String
   description     String?
+  ingredients     String?
   public          Boolean        @default(false)
   original        Boolean        @default(true)
   methodDetailsId String         @unique
@@ -53,7 +54,7 @@ model Step {
   order       Int
   createdat   DateTime @default(now())
   methodId    String
-  method      Method   @relation("MethodToStep", fields: [methodId], references: [id])
+  Method      Method   @relation("MethodToStep", fields: [methodId], references: [id])
 }
 
 model Profile {
@@ -79,9 +80,10 @@ model Badge {
 }
 
 model UserSettings {
-  userId  String   @unique
-  private Boolean? @default(false)
-  user    User     @relation("UserToUserSettings", fields: [userId], references: [id])
+  userId        String   @unique
+  private       Boolean? @default(false)
+  loginduration Int?     @default(259200)
+  user          User     @relation("UserToUserSettings", fields: [userId], references: [id])
 }
 
 model Comment {
@@ -91,7 +93,7 @@ model Comment {
   content   String
   createdat DateTime @default(now())
   likes     Int      @default(0)
-  method    Method   @relation("CommentToMethod", fields: [methodId], references: [id])
+  Method    Method   @relation("CommentToMethod", fields: [methodId], references: [id])
   user      User     @relation("CommentToUser", fields: [userId], references: [id])
 }
 

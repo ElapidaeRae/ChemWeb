@@ -2,6 +2,17 @@
 import logo from '$lib/ChemWebWordLogo.svg';
 import SearchBar from '$lib/components/LayoutSearchBar.svelte';
 import ProfileMenu from '$lib/components/ProfileMenu.svelte';
+import * as jwt from 'jsonwebtoken';
+
+// Check if the user is logged in
+let loggedIn = false;
+// let token = document.cookie.split(';').find(cookie => cookie.trim().startsWith('jwt'));
+// if (token) {
+// 	let decoded = jwt.decode(token.split('=')[1]);
+// 	if (decoded) {
+// 		loggedIn = true;
+// 	}
+// }
 </script>
 
 <div class="flex flex-row justify-between items-center bg-secondary shadow-lg rounded-b-lg sticky -top-1 h-20">
@@ -12,5 +23,12 @@ import ProfileMenu from '$lib/components/ProfileMenu.svelte';
 	<span class="flex">
 		<SearchBar />
 	</span>
-	<ProfileMenu />
+	{#if (loggedIn)}
+		<ProfileMenu />
+	{:else}
+		<div class="p-4">
+			<a href="/login" class="text-text rounded-md border-2 bg-primary p-2">Login</a>
+			<a href="/register" class="text-text rounded-md border-2 bg-primary p-2">Register</a>
+		</div>
+	{/if}
 </div>

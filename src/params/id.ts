@@ -1,3 +1,3 @@
 export function match(value) {
-	return /([0-9])\w*/.test(value)
+	return /^c([a-z0-9]{7,25})$/.test(value)
 }

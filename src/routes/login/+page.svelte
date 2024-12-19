@@ -1,12 +1,17 @@
 <body>
-	<main>
-		<div class="items-center p-4">
-			<h1 class="text-xl text-bold">Login</h1>
-			<form class="p-2" method="post" action="?/login">
-				<label for="username">Username</label>
-				<input type="text" id="username" name="username">
+<main class="bg-background content-center h-screen">
+	<div class="flex flex-wrap justify-center items-center p-2">
+		<h1 class="text-4xl text-text p-8 block">Login</h1>
+		<form class="p-8 flex flex-col border-l-4 border-text" method="post">
+			<label for="username" class="block text-text text-sm">Username</label>
+			<input type="text" id="username" name="username" class="p-2 rounded-md" required />
 
-			</form>
-		</div>
-	</main>
+			<label for="password" class="block text-text text-sm pt-2">Password</label>
+			<input type="password" id="password" name="password" class="p-2 rounded-md" required />
+
+			<button type="submit" class="bg-primary rounded-lg p-2 mt-4">Log In</button>
+
+		</form>
+	</div>
+</main>
 </body>

@@ -2,12 +2,10 @@
 	// Registration page
 	// This page will allow the user to register for an account on the website
 
-
-
 </script>
 
 <body>
-	<main class="bg-background content-center h-512">
+	<main class="bg-background content-center h-max">
 		<div class="flex flex-wrap justify-center items-center p-2">
 			<h1 class="text-4xl text-text p-8 block ">Register</h1>
 			<form class="p-8 flex flex-col border-l-4 border-text" method="post">

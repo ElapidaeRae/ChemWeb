@@ -5,8 +5,8 @@ import { redirect } from '@sveltejs/kit';
 export const actions = {
 	default: async ({ request }) => {
 		const data = await request.formData();
-		let email = data.get('email');
 		let username = data.get('username');
+		let email = data.get('email');
 		let password = data.get('password');
 		let confirm = data.get('confirm');
 
@@ -30,7 +30,7 @@ export const actions = {
 			}
 		}
 		else {
-			await createUser(email, username, password)
+			await createUser(username, email, password)
 			return redirect(303, '/')
 		}
 	}

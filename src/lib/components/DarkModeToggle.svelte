@@ -7,7 +7,7 @@
 			document.cookie = `darkMode=${value}; path=/`;
 		},
 		get: (name: string) => {
-			let cookie = document.cookie.split(';').find(cookie => cookie.startsWith(name));
+			let cookie = document.cookie.split(';').find(cookie => cookie.trim().startsWith(name));
 			if (cookie) {
 				return cookie.split('=')[1] === 'true';
 			}
@@ -33,7 +33,7 @@
 
 </script>
 
-<button class="text-text shadow-inner shadow-primary rounded-lg p-1" on:click={() => DarkModeToggle(cookies.get('darkMode'))}>
+<button class="text-text shadow-inner shadow-primary rounded-lg m-1 p-1 w-full" id="darkmodebutton" on:click={() => DarkModeToggle(cookies.get('darkMode'))}>
 <!--	<input type="checkbox" bind:value={darkMode}>-->
 	Dark Mode
 </button>
