@@ -13,7 +13,11 @@
 
 	const dispatch = createEventDispatcher();
 
-	export let text = 'Click to lift the lid';
+	interface Props {
+		text?: string;
+	}
+
+	let { text = 'Click to lift the lid' }: Props = $props();
 
 </script>
 

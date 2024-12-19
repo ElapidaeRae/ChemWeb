@@ -12,15 +12,27 @@
 	import { onMount, onDestroy } from 'svelte';
 
 
-	export let images: string[] = [];
-	export let interval = 5000;
-	export let autoplay = false;
-	export let loop = true;
-	export let controls = true;
-	export let indicators = true;
-	export let pause = false;
+	interface Props {
+		images?: string[];
+		interval?: number;
+		autoplay?: boolean;
+		loop?: boolean;
+		controls?: boolean;
+		indicators?: boolean;
+		pause?: boolean;
+	}
 
-	let currentImage = 0;
+	let {
+		images = [],
+		interval = 5000,
+		autoplay = false,
+		loop = true,
+		controls = true,
+		indicators = true,
+		pause = false
+	}: Props = $props();
+
+	let currentImage = $state(0);
 	let timer: number | null = null;
 	let isPaused = false;
 
@@ -80,7 +92,7 @@
 	{#if images.length > 0}
 		{#if loop}
 			{#if controls}
-				<button class="text-text absolute top-1/2 left-0 transform -translate-y-1/2" on:click={previousImage}>
+				<button class="text-text absolute top-1/2 left-0 transform -translate-y-1/2" onclick={previousImage}>
 					<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
 						<path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
 					</svg>
@@ -89,12 +101,12 @@
 			{#if indicators}
 				<div class="absolute bottom-0 left-1/2 transform -translate-x-1/2">
 					{#each images as image, index}
-						<button class="p-1 m-1 rounded-full bg-accent text-text" on:click={() => goToImage(index)}>{index + 1}</button>
+						<button class="p-1 m-1 rounded-full bg-accent text-text" onclick={() => goToImage(index)}>{index + 1}</button>
 					{/each}
 				</div>
 			{/if}
 			{#if controls}
-				<button class="text-text absolute top-1/2 right-0 transform -translate-y-1/2" on:click={nextImage}>
+				<button class="text-text absolute top-1/2 right-0 transform -translate-y-1/2" onclick={nextImage}>
 					<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
 						<path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
 					</svg>
@@ -102,7 +114,7 @@
 			{/if}
 		{/if}
 		<div class="flex justify-center items-center h-96">
-			<img src={images[currentImage]} alt="Carousel" class="object-center object-scale-down h-4/5" on:mouseenter={handleMouseEnter} on:mouseleave={handleMouseLeave} />
+			<img src={images[currentImage]} alt="Carousel" class="object-center object-scale-down h-4/5" onmouseenter={handleMouseEnter} onmouseleave={handleMouseLeave} />
 		</div>
 	{/if}
 </div>

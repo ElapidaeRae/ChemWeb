@@ -1,9 +1,13 @@
 <script lang="ts">
 	import picture from '$lib/Hydrazine_Conformer3D_medium.png';
 	import { prisma } from '$lib/prisma';
-	export let temp = '';
+	interface Props {
+		temp?: string;
+	}
+
+	let { temp = '' }: Props = $props();
 	// Temporary data for the method box
-	let method = {
+	let method = $state({
 		name: 'Hydrazine',
 		description: 'A simple method for synthesizing hydrazine from ammonia and bleach.',
 		author: 'John Chemistry',
@@ -14,7 +18,7 @@
 			likes: 3,
 			tags: ['Nitrogen', 'Volatile', 'Simple', 'Dangerous']
 		}
-	};
+	});
 
 	// Like the method, increment the likes count by 1 and update the database accordingly
 	function likeMethod() {

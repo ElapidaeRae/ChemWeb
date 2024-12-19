@@ -1,4 +1,9 @@
 <script lang="ts">
+	interface Props {
+		children?: import('svelte').Snippet;
+	}
+
+	let { children }: Props = $props();
 
 	const SettingsMenus = ["Account", "Privacy", "Security", "DelAccount"];
 
@@ -20,7 +25,7 @@
 
 			<!-- Settings content on the right side of the page -->
 			<div class="grid col-span-2 p-4">
-				<slot></slot>
+				{@render children?.()}
 			</div>
 
 		</div>

@@ -6,6 +6,8 @@
 </svelte:head>
 
 <script lang="ts">
+	import { run } from 'svelte/legacy';
+
 	import MethodBox from '$lib/components/MethodBox.svelte';
 	import { onMount } from 'svelte';
 
@@ -13,7 +15,9 @@
 		console.log('Page mounted');
 	});
 
-	$: console.log('Page updated');
+	run(() => {
+		console.log('Page updated');
+	});
 
 	// TODO: Dynamically load methods from the database
 </script>

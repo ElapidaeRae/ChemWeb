@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { run } from 'svelte/legacy';
+
 	import { createEventDispatcher } from 'svelte';
 
 	// The options for the dropdown select menu will be sourced from the parent component
@@ -6,18 +8,27 @@
 		label: string;
 		value: string;
 	}
-	// The options for the dropdown select menu
-	export let options: option[] = [];
-	// The selected value from the dropdown select menu
-	export let selected = '';
-	// Classes for tailwind styling
-	export let styling = ''
+	
+	
+	
+	interface Props {
+		// The options for the dropdown select menu
+		options?: option[];
+		// The selected value from the dropdown select menu
+		selected?: string;
+		// Classes for tailwind styling
+		styling?: string;
+	}
+
+	let { options = [], selected = $bindable(''), styling = '' }: Props = $props();
 
 	selected = options[0].value;
 
 	// When the selected value changes, emit an event to the parent component
 	const dispatch = createEventDispatcher();
-	$: dispatch('change', selected);
+	run(() => {
+		dispatch('change', selected);
+	});
 
 </script>
 

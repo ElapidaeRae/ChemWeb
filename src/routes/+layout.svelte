@@ -2,6 +2,11 @@
 	import '../styles.css';
 	import Footer from '$lib/components/Footer.svelte';
 	import LayoutBar from '$lib/components/LayoutBar.svelte';
+	interface Props {
+		children?: import('svelte').Snippet;
+	}
+
+	let { children }: Props = $props();
 
 	let cookies = {
 		set: (value) => {
@@ -21,7 +26,7 @@
 <main class="bg-background h-screen">
 	<LayoutBar />
 
-	<slot></slot>
+	{@render children?.()}
 
 	<Footer />
 </main>

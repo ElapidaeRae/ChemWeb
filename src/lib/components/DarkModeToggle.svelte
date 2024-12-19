@@ -33,7 +33,7 @@
 
 </script>
 
-<button class="text-text shadow-inner shadow-primary rounded-lg m-1 p-1 w-full" id="darkmodebutton" on:click={() => DarkModeToggle(cookies.get('darkMode'))}>
+<button class="text-text shadow-inner shadow-primary rounded-lg m-1 p-1 w-full" id="darkmodebutton" onclick={() => DarkModeToggle(cookies.get('darkMode'))}>
 <!--	<input type="checkbox" bind:value={darkMode}>-->
 	Dark Mode
 </button>
