@@ -7,7 +7,7 @@ ChemWeb is a web-based application that allows users to search for chemical comp
 1. Clone the repository ~~or download a zip file~~
 2. Open a terminal and navigate to the project directory
 3. Run `npm install`
-4. Run `npm run dev`
+4. Run `npm run dev -- --open --host`
 5. Open your browser and navigate to `localhost:3000`
 6. Grofit!
 
