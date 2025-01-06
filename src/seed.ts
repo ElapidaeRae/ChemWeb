@@ -14,4 +14,8 @@ async function seed() {
 					avatar: 'https://i.pravatar.cc/300'
 				}
 			}
+		}
+	});
+}
+
 

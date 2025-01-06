@@ -89,14 +89,14 @@ export async function getUserSettings(username: string) {
  * @param userId The id of the user who created the method.
  * @param name The name of the method.
  * @param description An optional description of the method.
- * @param tags
+ * @param tagslist An optional array of tag objects to connect to the method.
  * @returns The method object created in the database.
  *
  * @example
  * createMethod('cexample0id', 'Toluene', 'A toluene synthesis')
  */
 
-export async function createMethod(userId: string, name: string, description: string | null, tags: string[] | null) {
+export async function createMethod(userId: string, name: string, description: string | null, tagslist: string[] | null) {
 	if (!description) {
 		description = 'A method for ' + name;
 	}
@@ -104,7 +104,17 @@ export async function createMethod(userId: string, name: string, description: st
 		data: {
 			name,
 			description,
-			userId
+			userId,
+			MethodDetails: {
+				create: {
+					likes: 0,
+					tags: {
+						connectOrCreate: tagslist?.map(tag => ({
+							where: { name: tag },
+							create: { name: tag }
+						}))
+					}
+			}
 		},
 		include: {
 			MethodDetails: {
@@ -113,6 +123,7 @@ export async function createMethod(userId: string, name: string, description: st
 				}
 			}
 		}
+	}
 	});
 }
 
