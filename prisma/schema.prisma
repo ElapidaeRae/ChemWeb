@@ -15,9 +15,9 @@ model User {
   createdat      DateTime      @default(now())
   role           String        @default("user")
   Comment        Comment[]     @relation("CommentToUser")
-  profile        Profile?      @relation("ProfileToUser")
-  settings       UserSettings? @relation("UserToUserSettings")
-  createdmethods Method[]      @relation("MethodToUser")
+  Profile        Profile?      @relation("ProfileToUser")
+  Settings       UserSettings? @relation("UserToUserSettings")
+  Createdmethods Method[]      @relation("MethodToUser")
 }
 
 model Method {
@@ -30,10 +30,10 @@ model Method {
   methodDetailsId String         @unique
   methodforkid    String?
   Comment         Comment[]      @relation("CommentToMethod")
-  forks           MethodDetails? @relation("MethodToMethodDetailsforks", fields: [methodforkid], references: [id])
+  Forks           MethodDetails? @relation("MethodToMethodDetailsforks", fields: [methodforkid], references: [id])
   MethodDetails   MethodDetails  @relation("MethodToMethodDetails", fields: [methodDetailsId], references: [id])
-  steps           Step[]         @relation("MethodToStep")
-  creator         User           @relation("MethodToUser", fields: [userId], references: [id])
+  Steps           Step[]         @relation("MethodToStep")
+  Creator         User           @relation("MethodToUser", fields: [userId], references: [id])
   userId          String
 }
 
@@ -41,10 +41,10 @@ model MethodDetails {
   id             String   @id @default(cuid())
   createdat      DateTime @default(now())
   likes          Int      @default(0)
-  forks          Method[] @relation("MethodToMethodDetailsforks")
+  Forks          Method[] @relation("MethodToMethodDetailsforks")
   Method         Method?  @relation("MethodToMethodDetails")
-  tags           Tag[]    @relation("MethodDetailsToTag")
-  carouselImages Image[]  @relation("ImagesToMethodDetails")
+  Tags           Tag[]    @relation("MethodDetailsToTag")
+  CarouselImages Image[]  @relation("ImagesToMethodDetails")
 }
 
 model Step {
@@ -62,8 +62,8 @@ model Profile {
   userId String  @unique
   bio    String?
   avatar Bytes?
-  user   User    @relation("ProfileToUser", fields: [userId], references: [id])
-  badges Badge[] @relation("BadgeToProfile")
+  User   User    @relation("ProfileToUser", fields: [userId], references: [id])
+  Badges Badge[] @relation("BadgeToProfile")
 }
 
 model Tag {
@@ -76,14 +76,14 @@ model Tag {
 model Badge {
   name        String    @id @default(cuid())
   description String    @unique
-  users       Profile[] @relation("BadgeToProfile")
+  Users       Profile[] @relation("BadgeToProfile")
 }
 
 model UserSettings {
   userId        String   @unique
   private       Boolean? @default(false)
   loginduration Int?     @default(72)
-  user          User     @relation("UserToUserSettings", fields: [userId], references: [id])
+  User          User     @relation("UserToUserSettings", fields: [userId], references: [id])
 }
 
 model Comment {
@@ -94,7 +94,7 @@ model Comment {
   createdat DateTime @default(now())
   likes     Int      @default(0)
   Method    Method   @relation("CommentToMethod", fields: [methodId], references: [id])
-  user      User     @relation("CommentToUser", fields: [userId], references: [id])
+  User      User     @relation("CommentToUser", fields: [userId], references: [id])
 }
 
 model Image {
