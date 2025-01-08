@@ -82,7 +82,7 @@ model Badge {
 model UserSettings {
   userId        String   @unique
   private       Boolean? @default(false)
-  loginduration Int?     @default(259200)
+  loginduration Int?     @default(72)
   user          User     @relation("UserToUserSettings", fields: [userId], references: [id])
 }
 

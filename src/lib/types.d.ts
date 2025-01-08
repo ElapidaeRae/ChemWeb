@@ -1,13 +1,3 @@
-// declare type User = {
-// 		id: string;
-// 		email: string;
-// 		username: string;
-// 		password: string;
-// 		createdMethods: Method[];
-// 		createdAt: Date;
-// 		role: 'user' | 'admin';
-// 		profile: Profile;
-// 	}
 
 declare type User = {
   id: string;

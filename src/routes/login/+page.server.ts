@@ -1,42 +1,45 @@
 import {authenticateUser, getUserSettings} from '$lib/database';
-import * as jwt from 'jsonwebtoken'
+import { fail, redirect } from '@sveltejs/kit';
+import jwt from 'jsonwebtoken';
+import { JWT_SECRET } from '$env/static/private';
 
-let username = ''
 
 export const actions = {
-	default: async ({request}) => {
+	default: async ({request, cookies}) => {
+		// retrieving the login form data
 		const data = await request.formData()
-		username = data.get('username')
-		let password = data.get('password')
+		console.log(data);
+		let username: string = data.get('username')
+		let password: string = data.get('password')
+		// if the username or password is null, return a form error
 		if (username == null || password == null) {
-			return {
-				status: 400,
-				body: {
-					message: 'All fields are required'
-				}
-			}
+			return fail(400,{username, error:'All fields are required'})
 		}
+		// authenticate the password against the database
 		let [valid, message] = await authenticateUser(username, password)
 		if (!valid) {
-			console.log(message);
+			console.log(valid,message);
 		} else {
-			let cookies = {
-				set: (value: any) => {
-					return {
-						'set-cookie': `jwt=${value}; Path=/; HttpOnly`
-					};
-				}
-			};
+			console.log(valid,message);
 			let jwtpayload = {
 				'iss': 'chemweb',
 				'sub': username,
 				'iat': new Date().getTime()
 			};
-			if (!process.env.JWT_SECRET) {
-				throw new Error('JWT_SECRET not set');
+			console.log(jwtpayload,JWT_SECRET);
+			if (JWT_SECRET == null) {
+				console.log('JWT_SECRET not set');
+				return fail(501, {error:'JWT_SECRET not set'});
 			}
-			let jwtoken = jwt.sign(jwtpayload, process.env.JWT_SECRET, {expiresIn: '3d'});
-			cookies.set(jwtoken);
+			let expiry = getUserSettings(username).then((settings) => {
+				return settings.loginduration;
+			});
+			console.log('Expiry: ', expiry);
+			let jwtoken = jwt.sign(jwtpayload, JWT_SECRET, {expiresIn: '72h'});
+			console.log('JWT made: ', jwtoken);
+			cookies.set('jwt', jwtoken, {path: '/'});
+			console.log('Cookie set');
+			return redirect(300, '/');
 		}
 	}
 }

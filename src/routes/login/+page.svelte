@@ -9,6 +9,10 @@
 			<label for="password" class="block text-text text-sm pt-2">Password</label>
 			<input type="password" id="password" name="password" class="p-2 rounded-md" required />
 
+			{#if form?.error}
+				<p class="text-accent text-sm">{form?.error}</p>
+			{/if}
+
 			<button type="submit" class="bg-primary rounded-lg p-2 mt-4">Log In</button>
 
 		</form>

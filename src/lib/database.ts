@@ -75,6 +75,12 @@ export async function getUsersByUsername(username: string) {
 	});
 }
 
+
+/**
+ * Gets a user's settings by their username.
+ * @param username The username of the user.
+ * @returns The user settings object with the given username.
+ */
 export async function getUserSettings(username: string) {
 	let users = await getUsersByUsername(username)
 	return prisma.userSettings.findUnique({
