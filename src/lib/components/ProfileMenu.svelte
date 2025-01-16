@@ -2,11 +2,10 @@
 	import DarkModeMenu from './DarkModeMenu.svelte';
 
 	let dropdownState = false;
-	export let username = '';
 
 	function toggleDropdown() {
 		dropdownState = !dropdownState;
-		console.log(dropdownState);
+		console.log('Dropdown State:', dropdownState);
 	}
 
 	// Close the dropdown menu if the user clicks on an element outside of the dropdown

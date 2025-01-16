@@ -21,7 +21,6 @@
 			{/if}
 
 			<button type="submit" class="bg-primary rounded-lg p-2 mt-4">Log In</button>
-
 		</form>
 	</div>
 </main>

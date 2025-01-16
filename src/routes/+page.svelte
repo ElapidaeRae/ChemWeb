@@ -17,9 +17,8 @@
 <body class="bg-background">
 	<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 p-2 ">
 		{#each {length: 10} as _, i}
-			<MethodBox temp="{i}"/>
+			<MethodBox />
 		{/each}
-
 	</div>
 </body>
 

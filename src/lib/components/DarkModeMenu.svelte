@@ -7,7 +7,7 @@
 	function updateDarkMode() {
 		darkMode.update((value) => !value);
 	}
-	$: console.log($darkMode);
+	$: console.log('DarkMode: ',$darkMode);
 
 </script>
 
