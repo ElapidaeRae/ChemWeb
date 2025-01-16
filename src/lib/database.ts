@@ -16,7 +16,6 @@ import type { Tag, Method } from '@prisma/client'
  */
 export async function createUser(username: string, email: string, password: string) {
 
-
 	// hash password with argon2
 	const hashedPassword = await argon2.hash(password);
 
@@ -31,6 +30,10 @@ export async function createUser(username: string, email: string, password: stri
 				email,
 				username,
 				password: hashedPassword
+			},
+			include: {
+				settings: true,
+				profile: true
 			}
 		});
 	}
@@ -171,10 +174,15 @@ export async function getMethodById(methodId: string) {
  * @remarks i hope
  */
 
-export async function getRandomMethod() {
+export async function getRandomMethod(quantity: number) {
 	let methods = await prisma.method.findMany();
-	let randomIndex = Math.floor(Math.random() * methods.length);
-	return methods[randomIndex];
+	let methodlist = [];
+	for (let i = 0; i < quantity; i++) {
+		let randomIndex = Math.floor(Math.random() * methods.length);
+		console.log(methods[randomIndex]);
+		methodlist.push(methods[randomIndex]);
+	}
+	return methodlist;
 }
 
 /**

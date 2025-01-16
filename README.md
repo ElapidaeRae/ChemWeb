@@ -1,10 +1,9 @@
 # ChemWeb
-ChemWeb is a web-based application that allows users to search for chemical compounds and reactions. It is built using svelte.
+ChemWeb is a web-based application that allows users to search for chemical reactions. It is built using [Svelte](https://svelte.dev/).
 
 # Instructions
 > Note: You need to have node.js installed on your system to run this project. If you don't have it installed, you can download it from [here](https://nodejs.org/).
-> Also you can't use `pip` to install the dependencies Mr. Harris.
-1. Clone the repository ~~or download a zip file~~
+1. Clone the repository
 2. Open a terminal and navigate to the project directory
 3. Run `npm install`
 4. Run `npm run dev -- --open --host`

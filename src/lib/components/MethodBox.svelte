@@ -32,7 +32,6 @@
 			}
 		});
 	}
-	let b64img = 5
 
 </script>
 

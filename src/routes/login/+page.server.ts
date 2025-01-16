@@ -2,13 +2,19 @@ import {authenticateUser, getUserSettings} from '$lib/database';
 import { fail, redirect } from '@sveltejs/kit';
 import jwt from 'jsonwebtoken';
 import { JWT_SECRET } from '$env/static/private';
+import { loggedIn } from '$lib/stores';
 
 
 export const actions = {
-	default: async ({request, cookies}) => {
+	default: async ({request, cookies, url}) => {
+		// If the user is already logged in, redirect them to the root page
+		let token = cookies.get('jwt');
+		if (token) {
+			loggedIn.set(true);
+			return redirect(303, '/');
+		}
 		// retrieving the login form data
 		const data = await request.formData()
-		console.log(data);
 		let username: string = data.get('username')
 		let password: string = data.get('password')
 		// if the username or password is null, return a form error
@@ -17,29 +23,28 @@ export const actions = {
 		}
 		// authenticate the password against the database
 		let [valid, message] = await authenticateUser(username, password)
+		// if the password is invalid, return a form error
 		if (!valid) {
-			console.log(valid,message);
+			return fail(400,{error:message})
 		} else {
-			console.log(valid,message);
+			// otherwise, create a JWT token and set it as a cookie
 			let jwtpayload = {
 				'iss': 'chemweb',
 				'sub': username,
 				'iat': new Date().getTime()
 			};
-			console.log(jwtpayload,JWT_SECRET);
 			if (JWT_SECRET == null) {
 				console.log('JWT_SECRET not set');
 				return fail(501, {error:'JWT_SECRET not set'});
 			}
-			let expiry = getUserSettings(username).then((settings) => {
-				return settings.loginduration;
-			});
-			console.log('Expiry: ', expiry);
-			let jwtoken = jwt.sign(jwtpayload, JWT_SECRET, {expiresIn: '72h'});
-			console.log('JWT made: ', jwtoken);
-			cookies.set('jwt', jwtoken, {path: '/'});
-			console.log('Cookie set');
-			return redirect(300, '/');
+			// let expiry = getUserSettings(username).then((settings) => {
+			// 	return settings.loginduration;
+			// });
+			let expiry = '72h';
+			let token = jwt.sign(jwtpayload, JWT_SECRET, {expiresIn: expiry});
+			cookies.set('jwt', token, {path: '/'});
+			// Redirect to the page the user was trying to access
+			return redirect(303, url.searchParams.get('redirectTo') || '/');
 		}
 	}
 }

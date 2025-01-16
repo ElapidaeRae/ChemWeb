@@ -2,17 +2,27 @@
 import logo from '$lib/ChemWebWordLogo.svg';
 import SearchBar from '$lib/components/LayoutSearchBar.svelte';
 import ProfileMenu from '$lib/components/ProfileMenu.svelte';
-import * as jwt from 'jsonwebtoken';
+import { onMount } from 'svelte';
+import { loggedIn } from '$lib/stores';
+import DarkModeMenu from '$lib/components/DarkModeMenu.svelte';
 
-// Check if the user is logged in
-let loggedIn = false;
-// let token = document.cookie.split(';').find(cookie => cookie.trim().startsWith('jwt'));
-// if (token) {
-// 	let decoded = jwt.decode(token.split('=')[1]);
-// 	if (decoded) {
-// 		loggedIn = true;
-// 	}
-// }
+// Check if the user is logged in on mount of the component
+onMount(({ cookies }) => {
+	let token = cookies.get('jwt');
+	if (!token) {
+		loggedIn.set(true);
+	} else {
+		loggedIn.set(false);
+	}
+});
+
+$: loggedIn.subscribe(value => {
+	if (value) {
+		console.log('User is logged in');
+	} else {
+		console.log('User is not logged in');
+	}
+});
 </script>
 
 <div class="flex flex-row justify-between items-center bg-secondary shadow-lg rounded-b-lg sticky -top-1 h-20">
@@ -23,10 +33,11 @@ let loggedIn = false;
 	<span class="flex">
 		<SearchBar />
 	</span>
-	{#if (loggedIn)}
-		<ProfileMenu />
+	{#if ($loggedIn)}
+		<ProfileMenu username="w" />
 	{:else}
 		<div class="p-4">
+			<DarkModeMenu />
 			<a href="/login" class="text-text rounded-md border-2 bg-primary p-2">Login</a>
 			<a href="/register" class="text-text rounded-md border-2 bg-primary p-2">Register</a>
 		</div>

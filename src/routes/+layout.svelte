@@ -2,19 +2,11 @@
 	import '../styles.css';
 	import Footer from '$lib/components/Footer.svelte';
 	import LayoutBar from '$lib/components/LayoutBar.svelte';
+	import { onMount } from 'svelte';
 
-	let cookies = {
-		set: (value) => {
-			document.cookie = `darkMode=${value}; path=/`;
-		},
-		get: (name) => {
-			let cookie = document.cookie.split(';').find(cookie => cookie.trim().startsWith(name));
-			if (cookie) {
-				return cookie.split('=')[1] === 'true';
-			}
-			return false;
-		}
-	};
+	onMount(() => {
+		console.log('Page mounted');
+	});
 
 </script>
 
