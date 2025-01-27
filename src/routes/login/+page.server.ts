@@ -2,7 +2,7 @@ import {authenticateUser, getUserSettings} from '$lib/database';
 import { fail, redirect } from '@sveltejs/kit';
 import jwt from 'jsonwebtoken';
 import { JWT_SECRET } from '$env/static/private';
-import { loggedIn } from '$lib/stores';
+import type { Actions } from '@sveltejs/kit';
 
 
 export const actions = {
@@ -10,7 +10,6 @@ export const actions = {
 		// If the user is already logged in, redirect them to the root page
 		let token = cookies.get('jwt');
 		if (token) {
-			loggedIn.set(true);
 			return redirect(303, '/');
 		}
 		// retrieving the login form data
@@ -44,7 +43,11 @@ export const actions = {
 			let token = jwt.sign(jwtpayload, JWT_SECRET, {expiresIn: expiry});
 			cookies.set('jwt', token, {path: '/'});
 			// Redirect to the page the user was trying to access
-			return redirect(303, url.searchParams.get('redirectTo') || '/');
+			if (url.searchParams.get('redirectTo') == null) {
+				return redirect(303, '/');
+			}
+			console.log('Redirecting to ' + url.searchParams.get('redirectTo'));
+			return redirect(303, '/' + url.searchParams.get('redirectTo'));
 		}
 	}
-}
+} satisfies Actions;

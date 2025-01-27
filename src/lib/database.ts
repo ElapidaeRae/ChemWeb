@@ -47,7 +47,7 @@ export async function createUser(username: string, email: string, password: stri
  * @returns A tuple with the first element being a boolean indicating if the user is authenticated and the second element being a string with the result message.
  *
  * @example
- * authenticateUser('EElric', 'philosopherstone')
+ * let response = authenticateUser('EElric', 'philosopherstone')
  */
 export async function authenticateUser(username: string, password: string) {
 	let users = await getUsersByUsername(username)

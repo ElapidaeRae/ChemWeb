@@ -19,7 +19,6 @@
 
 <div class="flex items-center px-2" on:focusout={dropdownLostFocus}>
 	<div class="flex flex-col menu bg-background rounded-lg shadow-lg shadow-accent p-2 relative translate-y-20 translate-x-8 items-center" style:visibility={dropdownState ? 'visible' : 'hidden'}>
-		<DarkModeMenu/>
 		<a href="/new-method" class="text-text m-1 w-full">
 			<span class="flex shadow-primary shadow-inner rounded-lg p-1">
 				<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">

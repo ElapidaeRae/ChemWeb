@@ -7,17 +7,22 @@
 
 <script lang="ts">
 	import MethodBox from '$lib/components/MethodBox.svelte';
+	import { getRandomMethod } from '$lib/database';
 
 	$: console.log('Page updated');
 
 	// TODO: Dynamically load methods from the database
+	let methoddata = getRandomMethod(5)
+	if (methoddata == null) {
+		methoddata = [];
+	}	
 
 </script>
 
 <body class="bg-background">
 	<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 p-2 ">
-		{#each {length: 10} as _, i}
-			<MethodBox />
+		{#each methoddata as data}
+			<MethodBox method=data/>
 		{/each}
 	</div>
 </body>
