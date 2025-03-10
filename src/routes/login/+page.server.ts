@@ -3,6 +3,7 @@ import { fail, redirect } from '@sveltejs/kit';
 import jwt from 'jsonwebtoken';
 import { JWT_SECRET } from '$env/static/private';
 import type { Actions } from '@sveltejs/kit';
+import { goto } from '$app/navigation';
 
 
 export const actions = {
@@ -14,11 +15,16 @@ export const actions = {
 		}
 		// retrieving the login form data
 		const data = await request.formData()
-		let username: string = data.get('username')
-		let password: string = data.get('password')
+		console.log('Login form: ' + data)
+		let username: FormDataEntryValue | null = data.get('username')
+		let password: FormDataEntryValue | null = data.get('password')
 		// if the username or password is null, return a form error
 		if (username == null || password == null) {
 			return fail(400,{username, error:'All fields are required'})
+		}
+		// If the user somehow managed to upload a file as a username or password, return a form error befitting the absurdity of that
+		if (username instanceof File || password instanceof File) {
+			return fail(418, {error: 'What the hell did you do?'})
 		}
 		// authenticate the password against the database
 		let [valid, message] = await authenticateUser(username, password)
@@ -34,20 +40,23 @@ export const actions = {
 			};
 			if (JWT_SECRET == null) {
 				console.log('JWT_SECRET not set');
-				return fail(501, {error:'JWT_SECRET not set'});
+				return fail(501, {error: 'JWT_SECRET not set'});
 			}
 			// let expiry = getUserSettings(username).then((settings) => {
 			// 	return settings.loginduration;
 			// });
 			let expiry = '72h';
 			let token = jwt.sign(jwtpayload, JWT_SECRET, {expiresIn: expiry});
-			cookies.set('jwt', token, {path: '/'});
+			cookies.set('jwt', token, {path: '/', expires: new Date(new Date().getTime() + 1000 * 60 * 60 * 24 * 3)});
 			// Redirect to the page the user was trying to access
-			if (url.searchParams.get('redirectTo') == null) {
+			console.log('URL: ' + url);
+			let location = url.searchParams.get('redirectTo');
+			console.log('Redirecting to ' + location);
+			if (location == null) {
 				return redirect(303, '/');
+			} else {
+				return redirect(303, location);
 			}
-			console.log('Redirecting to ' + url.searchParams.get('redirectTo'));
-			return redirect(303, '/' + url.searchParams.get('redirectTo'));
 		}
 	}
 } satisfies Actions;

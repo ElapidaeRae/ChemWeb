@@ -5,9 +5,11 @@ import { JWT_SECRET } from '$env/static/private';
 export function load({ cookies, url }) {
 	let token = cookies.get('jwt');
 	if (!token) {
-		return redirect(303,'/login?redirectTo=' + url.pathname);
+		cookies.set('redirectTo', url.pathname, { path: '/' });
+		return redirect(303,'/login');
 	}
 	if (jwt.verify(token, JWT_SECRET)) {
+		cookies.delete('redirectTo', { path: '/' });
 		return {
 			status: 200
 		};

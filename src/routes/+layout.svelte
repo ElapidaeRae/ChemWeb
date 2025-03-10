@@ -3,8 +3,7 @@
 	import Footer from '$lib/components/Footer.svelte';
 	import LayoutBar from '$lib/components/LayoutBar.svelte';
 	import { onMount } from 'svelte';
-	import { darkMode } from '$lib/stores';
-	import { teststrung } from './+layout.server';
+	import { darkMode, loggedIn } from '$lib/stores';
 
 	onMount(() => {
 		console.log('Page mounted');
@@ -14,12 +13,13 @@
 			document.body.classList.remove('dark');
 		}
 	});
-
+	// get the data from the server
+	let auth;
 
 </script>
 
 <main class="bg-background h-screen">
-	<LayoutBar loggedin={authed} />
+	<LayoutBar loggedin={$loggedIn} />
 	<slot></slot>
 	<Footer />
 </main>

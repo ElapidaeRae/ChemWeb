@@ -10,7 +10,7 @@ export const actions = {
 		let password = data.get('password');
 		let confirm = data.get('confirm');
 
-		console.log(data)
+		console.log('Registration Data: ' + data)
 		if (email == null || username == null || password == null || confirm == null) {
 			return {
 				status: 422,
@@ -23,7 +23,7 @@ export const actions = {
 				body: 'Passwords do not match'
 			}
 		}
-		else if ({email,username,password} instanceof File) {
+		else if (email instanceof File || username instanceof File || password instanceof File || confirm instanceof File) {
 			return {
 				status: 418,
 				body: 'What the hell did you do?'

@@ -9,7 +9,7 @@
 <main class="bg-background content-center h-screen">
 	<div class="flex flex-wrap justify-center items-center p-2">
 		<h1 class="text-4xl text-text p-8 block">Login</h1>
-		<form class="p-8 flex flex-col border-l-4 border-text">
+		<form class="p-8 flex flex-col border-l-4 border-text" autocomplete="off" method="post" use:enhance>
 			<label for="username" class="block text-text text-sm">Username</label>
 			<input type="text" id="username" name="username" class="p-2 rounded-md" required />
 

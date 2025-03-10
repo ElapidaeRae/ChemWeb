@@ -20,11 +20,11 @@ export async function createUser(username: string, email: string, password: stri
 	const hashedPassword = await argon2.hash(password);
 
 	// check if user already exists
-	let users = await getUsersByUsername(username);
-	if (users.length > 1) {
+	let user = await getUserByUsername(username);
+	if (user) {
 		throw new Error('Database Error');
 	}
-	if (users.length == 0) {
+	if (user == null) {
 		return prisma.user.create({
 			data: {
 				email,
@@ -32,8 +32,8 @@ export async function createUser(username: string, email: string, password: stri
 				password: hashedPassword
 			},
 			include: {
-				settings: true,
-				profile: true
+				Settings: true,
+				Profile: true
 			}
 		});
 	}
@@ -50,15 +50,12 @@ export async function createUser(username: string, email: string, password: stri
  * let response = authenticateUser('EElric', 'philosopherstone')
  */
 export async function authenticateUser(username: string, password: string) {
-	let users = await getUsersByUsername(username)
-	if (users.length == 0){
+	let user = await getUserByUsername(username)
+	if (user == null){
 		return [false, 'User doesn\'t exist']
 	}
-	else if (users.length > 1){
-		return [false, 'Database Error']
-	}
 	// verify password with argon2
-	let valid = await argon2.verify(users[0].password, password)
+	let valid = await argon2.verify(user.password, password)
 	if (!valid){
 		return [valid, 'Invalid Password']
 	}
@@ -70,12 +67,16 @@ export async function authenticateUser(username: string, password: string) {
  * @param username The username of the user.
  * @returns An array of user objects with the given username.
  */
-export async function getUsersByUsername(username: string) {
-	return prisma.user.findMany({
+export async function getUserByUsername(username: string) {
+	let results = await prisma.user.findMany({
 		where: {
 			username
 		}
-	});
+	})
+	if (results.length == 0){
+		throw new Error('User doesn\'t exist')
+	}
+	return results[0];
 }
 
 
@@ -85,17 +86,20 @@ export async function getUsersByUsername(username: string) {
  * @returns The user settings object with the given username.
  */
 export async function getUserSettings(username: string) {
-	let users = await getUsersByUsername(username)
+	let user = await getUserByUsername(username)
+	if (user == null){
+		throw new Error('User doesn\'t exist')
+	}
 	return prisma.userSettings.findUnique({
 		where: {
-			userId: users[0].id
+			userId: user.id
 		}
 	});
 }
 
 /**
  * Creates a new method in the database.
- * @param userId The id of the user who created the method.
+ * @param username The username of the user who created the method.
  * @param name The name of the method.
  * @param description An optional description of the method.
  * @param tagslist An optional array of tag objects to connect to the method.
@@ -105,34 +109,44 @@ export async function getUserSettings(username: string) {
  * createMethod('cexample0id', 'Toluene', 'A toluene synthesis')
  */
 
-export async function createMethod(userId: string, name: string, description: string | null, tagslist: string[] | null) {
+export async function createMethod(username: string, name: string, description: string | null, tagslist: string[] | null) {
 	if (!description) {
 		description = 'A method for ' + name;
 	}
+	let user = await getUserByUsername(username);
+	console.log(user);
+	if (user == null) {
+		throw new Error('User doesn\'t exist');
+	}
+
 	return prisma.method.create({
 		data: {
 			name,
 			description,
-			userId,
+			Creator: {
+				connect: {
+					id: user.id
+				}
+			},
 			MethodDetails: {
 				create: {
 					likes: 0,
-					tags: {
+					Tags: {
 						connectOrCreate: tagslist?.map(tag => ({
 							where: { name: tag },
 							create: { name: tag }
 						}))
 					}
-			}
+				}
+			},
 		},
 		include: {
 			MethodDetails: {
 				include: {
-					tags: true
+					Tags: true
 				}
 			}
 		}
-	}
 	});
 }
 
@@ -175,13 +189,27 @@ export async function getMethodById(methodId: string) {
  */
 
 export async function getRandomMethod(quantity: number) {
-	let methods = await prisma.method.findMany();
+	console.log('Getting ' + quantity + ' random methods');
+	let methods = await prisma.method.findMany({
+		where: {
+			public: true
+		},
+		include: {
+			MethodDetails: {
+				include: {
+					Tags: true
+				}
+			}
+		}
+	});
 	let methodlist = [];
 	for (let i = 0; i < quantity; i++) {
 		let randomIndex = Math.floor(Math.random() * methods.length);
-		console.log(methods[randomIndex]);
 		methodlist.push(methods[randomIndex]);
+		methods = methods.splice(randomIndex, 1);
 	}
+	console.log('Returning ' + methodlist.length + ' random methods');
+	console.log(methodlist);
 	return methodlist;
 }
 
@@ -204,7 +232,7 @@ export async function createMethodDetails(methodId: string, likes: number, tags:
 					id: methodId
 				}
 			},
-			tags: {
+			Tags: {
 				connect: tags
 			}
 		}
@@ -270,7 +298,7 @@ export async function createStep(methodId: string, name: string, description: st
 			description,
 			Method: {
 				connect: {
-					methodId: methodId
+					id: methodId
 				}
 			}
 		}

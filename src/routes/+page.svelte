@@ -7,22 +7,22 @@
 
 <script lang="ts">
 	import MethodBox from '$lib/components/MethodBox.svelte';
-	import { getRandomMethod } from '$lib/database';
+	import picture from '$lib/Hydrazine_Conformer3D_medium.png';
 
 	$: console.log('Page updated');
 
-	// TODO: Dynamically load methods from the database
-	let methoddata = getRandomMethod(5)
-	if (methoddata == null) {
-		methoddata = [];
-	}	
+	export let data;
+	if (data == null){
+		throw new Error('No methods received');
+	}
+	console.log('Data:', data);
 
 </script>
 
 <body class="bg-background">
 	<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 p-2 ">
-		{#each methoddata as data}
-			<MethodBox method=data/>
+		{#each data as method}
+			<MethodBox {...method} />
 		{/each}
 	</div>
 </body>
