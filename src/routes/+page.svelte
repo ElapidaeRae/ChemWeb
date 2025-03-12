@@ -7,7 +7,9 @@
 
 <script lang="ts">
 	import MethodBox from '$lib/components/MethodBox.svelte';
-	import picture from '$lib/Hydrazine_Conformer3D_medium.png';
+	import image from '$lib/Hydrazine_Conformer3D_medium.png';
+	import type { Method,MethodDetails,Image } from '@prisma/client';
+
 
 	$: console.log('Page updated');
 
@@ -15,14 +17,17 @@
 	if (data == null){
 		throw new Error('No methods received');
 	}
-	console.log('Data:', data);
 
 </script>
 
 <body class="bg-background">
+	<h1 class="text-4xl text-text p-8 block ">Methods</h1>
 	<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 p-2 ">
-		{#each data as method}
-			<MethodBox {...method} />
+<!--		<MethodBox id="/" name="test" description="test" author="test" MethodDetails={{tags: ['test', 'test', 'test'], CarouselImages: [{raw: image, alt: 'test'}]}}>-->
+
+<!--		</MethodBox>-->
+		{#each data.data as method}
+			<MethodBox id={method.id} name={method.name} description={method.description} author={method.author} MethodDetails={method.MethodDetails}></MethodBox>
 		{/each}
 	</div>
 </body>
