@@ -173,6 +173,14 @@ export async function getMethodById(methodId: string) {
 	return prisma.method.findUnique({
 		where: {
 			id: methodId
+		},
+		include: {
+			MethodDetails: {
+				include: {
+					Tags: true
+				}
+			},
+			Creator: true
 		}
 	});
 }
@@ -196,14 +204,15 @@ export async function getRandomMethod(quantity: number) {
 				include: {
 					Tags: true
 				}
-			}
+			},
+			Creator: true
 		}
 	});
 	let methodlist = [];
 	for (let i = 0; i < quantity; i++) {
 		let randomIndex = Math.floor(Math.random() * methods.length);
 		methodlist.push(methods[randomIndex]);
-		methods = methods.splice(randomIndex, 1);
+		methods.splice(randomIndex, 1);
 	}
 	console.log('Returning ' + methodlist.length + ' random methods');
 	return methodlist;

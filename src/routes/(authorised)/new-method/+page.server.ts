@@ -28,7 +28,7 @@ export const actions = {
 		// Get the user's id by first decoding the JWT token
 		let username = jwt.decode(token).sub;
 		let users = await getUserByUsername(username);
-		let userId = users[0].id;
+		let userId = users.id;
 		// Create the method in the database
 		let method = await createMethod(userId, name, description, tagslist);
 		// Redirect to the new method page

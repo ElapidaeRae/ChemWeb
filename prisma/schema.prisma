@@ -67,10 +67,9 @@ model Profile {
 }
 
 model Tag {
-  id              String         @id @default(cuid())
-  name            String         @unique
-  methodDetailsId String?
-  MethodDetails   MethodDetails? @relation("MethodDetailsToTag", fields: [methodDetailsId], references: [id])
+  id            String          @id @default(cuid())
+  name          String          @unique
+  MethodDetails MethodDetails[] @relation("MethodDetailsToTag")
 }
 
 model Badge {
@@ -99,7 +98,6 @@ model Comment {
 
 model Image {
   id              String        @id @default(cuid())
-  url             String?
   raw             Bytes?
   alt             String?
   methodDetailsId String

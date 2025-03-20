@@ -2,12 +2,15 @@
 	import logo from '$lib/ChemWebWordLogo.svg';
 	import SearchBar from '$lib/components/LayoutSearchBar.svelte';
 	import ProfileMenu from '$lib/components/ProfileMenu.svelte';
-	import { onMount } from 'svelte';
-	import jwt from 'jsonwebtoken';
+
 
 	// Check if the user is logged in
 	export let loggedIn = false;
+	export let username;
 
+	if (!username) {
+		username = 'User';
+	}
 </script>
 
 <div class="flex flex-row justify-between items-center bg-secondary shadow-lg rounded-b-lg sticky -top-1 h-20">
@@ -19,7 +22,7 @@
 		<SearchBar />
 	</span>
 	{#if (loggedIn)}
-		<ProfileMenu username="w" />
+		<ProfileMenu {username}/>
 	{:else}
 		<div class="p-4">
 			<a href="/login" class="text-text rounded-md border-2 bg-primary p-2">Login</a>

@@ -11,7 +11,7 @@ export async function POST({ request, cookies }) {
 	}
 	let authed = jwt.verify(token, JWT_SECRET);
 	// Verify that the token is still in date
-	if (authed.iat < new Date().getTime()) {
+	if (authed.exp < new Date().getTime()) {
 		// Token has expired and must be removed
 		cookies.set('jwt', '', {path: '/', expires: new Date(0)});
 		return json({error: 'Token has expired'}, {status: 401});
