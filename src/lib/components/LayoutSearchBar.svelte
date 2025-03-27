@@ -1,6 +1,6 @@
 <!-- Search bar component for use in the header of the website -->
-<!-- A very important component that allows users to search for methods by name, author, tag or most importantly, by structure -->
-<!-- Structure search is a feature that allows users to draw a chemical structure and search for methods that mention chemicals with similar structures -->
+<!-- A very important component that allows users to search?query=[query] for methods by name, author, tag or most importantly, by structure -->
+<!-- Structure search?query=[query] is a feature that allows users to draw a chemical structure and search?query=[query] for methods that mention chemicals with similar structures -->
 <!-- This component will be used in the header of the website -->
 
 <script lang="ts">
@@ -20,7 +20,7 @@
 		{ label: 'Tag', value: 'tag' }
 	];
 
-	// Get the current search type from the dropdown
+	// Get the current search?query=[query] type from the dropdown
 
 	const dispatch = createEventDispatcher();
 

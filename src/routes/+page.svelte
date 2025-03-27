@@ -15,8 +15,8 @@
 		throw new Error('No methods received');
 	}
 	let methods = data.data;
-	console.log('Data: ' + JSON.stringify(methods))
-	console.log('Data: ' + JSON.stringify(methods[0].MethodDetails));
+	// console.log('Data: ' + JSON.stringify(methods))
+	// console.log('Data: ' + JSON.stringify(methods[0].MethodDetails));
 
 
 </script>

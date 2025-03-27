@@ -1,4 +1,4 @@
-import {createMethod, getUsersByUsername, createTag} from '$lib/database';
+import {createMethod, getUserByUsername, createTag} from '$lib/database';
 // import picture from '$lib/Hydrazine_Conformer3D_medium.png';
 
 
@@ -15,7 +15,7 @@ let method = {
 	}
 };
 
-let user = await getUsersByUsername('John Chemistry');
+let user = await getUserByUsername('John Chemistry');
 console.log(user);
 
 await createMethod(user[0].id, method.name, method.description);

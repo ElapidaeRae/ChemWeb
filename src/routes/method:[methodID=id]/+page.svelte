@@ -44,7 +44,7 @@
 				<p class="text-text text-sm">Published: {datetime}</p>
 				<div class="flex flex-wrap">
 					{#each method.MethodDetails.Tags as tag}
-						<span class="text-text text-sm bg-primary rounded-lg p-1 m-1">{tag}</span>
+						<span class="text-text text-sm bg-primary rounded-lg p-1 m-1">{tag.name}</span>
 					{/each}
 				</div>
 			</div>

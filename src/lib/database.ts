@@ -192,12 +192,11 @@ export async function getMethodById(methodId: string) {
  * @example
  * let method = await getRandomMethod();
  *
- * @remarks this is entirely untested, but it probably works
- * @remarks i hope
+ * @remarks this is ~~entirely un~~tested, but it ~~probably~~ works
+ * @remarks ~~i hope~~
  */
 
 export async function getRandomMethod(quantity: number) {
-	console.log('Getting ' + quantity + ' random methods');
 	let methods = await prisma.method.findMany({
 		include: {
 			MethodDetails: {
@@ -214,7 +213,6 @@ export async function getRandomMethod(quantity: number) {
 		methodlist.push(methods[randomIndex]);
 		methods.splice(randomIndex, 1);
 	}
-	console.log('Returning ' + methodlist.length + ' random methods');
 	return methodlist;
 }
 
