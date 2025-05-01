@@ -24,7 +24,7 @@ export const actions = {
 		}
 		// If the user somehow managed to upload a file as a username or password, return a form error befitting the absurdity of that
 		if (username instanceof File || password instanceof File) {
-			return fail(418, {error: 'What the hell did you do?'})
+			return fail(418, {error: 'What did you do?'})
 		}
 		// authenticate the password against the database
 		let [valid, message] = await authenticateUser(username, password)
@@ -42,16 +42,11 @@ export const actions = {
 				console.log('JWT_SECRET not set');
 				return fail(501, {error: 'JWT_SECRET not set'});
 			}
-			// let expiry = getUserSettings(username).then((settings) => {
-			// 	return settings.loginduration;
-			// });
 			let expiry = '72h';
 			let token = jwt.sign(jwtpayload, JWT_SECRET, {expiresIn: expiry});
-			cookies.set('jwt', token, {path: '/', expires: new Date(new Date().getTime() + 1000 * 60 * 60 * 24 * 3)});
+			cookies.set('jwt', token, {path: '/', expires: new Date(new Date().getTime() + 1000 * 60 * 60 * 24 * 3), httpOnly: true, secure: true});
 			// Redirect to the page the user was trying to access
-			console.log('URL: ' + url);
 			let location = url.searchParams.get('redirectTo');
-			console.log('Redirecting to ' + location);
 			if (location == null) {
 				return redirect(303, '/');
 			} else {

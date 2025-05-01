@@ -1,11 +1,15 @@
 <script lang="ts">
 	import defaultImage from '$lib/Hydrazine_Conformer3D_medium.png';
 	import { logo } from '$lib/b64';
+	import { dislikeMethod, getUserByUsername, getUserLikes, likeMethod } from '$lib/database';
+
 	export let id: string;
 	export let name = 'Method Name';
 	export let description = 'Method Description';
 	export let author = 'Method Author';
 
+	export let username: string;
+	// Default values
 	export let MethodDetails = {
 		Tags: [
 			{id: 'c123456', name: 'tag1',},
@@ -23,13 +27,42 @@
 
 	let picture;
 	let alt: string;
+	// If no image is provided, use the default image
 	if (MethodDetails.CarouselImages == null || MethodDetails.CarouselImages.length == 0) {
 		picture = defaultImage;
 	} else {
+		// Else set the methodbox image to the first image in the list
 		picture = MethodDetails.CarouselImages[0].raw;
 		alt = MethodDetails.CarouselImages[0].alt;
 	}
 
+
+	// Like button functionality
+	function changeLikeState() {
+	getUserByUsername(username).then(
+		(user) => {
+			if (user.id == null) {
+				alert('User not found');
+				return;
+			}
+			// Check if the user has already liked the method
+			getUserLikes(user.id).then(
+				(likes) => {
+					if (likes == null) {
+						alert('Error getting user likes');
+						return;
+					}
+					if (id in likes) {
+						// If the user has already liked the method, unlike it
+						dislikeMethod(id, user.id)
+					} else {
+						likeMethod(id, user.id);
+					}
+				}
+			)
+		}
+	);
+	}
 </script>
 
 <div class="p-2 break-inside-avoid">
@@ -46,4 +79,8 @@
 			</div>
 		</div>
 	</a>
+<!--		<div class="flex flex-row justify-between items-center">-->
+<!--			<button class="bg-primary text-text rounded-lg p-2 mt-4" on:click={changeLikeState}>Like</button>-->
+<!--			<p class="text-text text-sm">{MethodDetails.likes} Likes</p>-->
+<!--		</div>-->
 </div>

@@ -21,7 +21,11 @@
 
 </script>
 
-<body class="bg-background">
+<body class="bg-background min-h-screen">
+	<div class="items-center flex flex-col bg-secondary">
+		<img src="src/lib/ChemWebWordLogo.svg" alt="ChemWeb Logo" class="p-4 " />
+		<p class="text-text text-lg p-8 block">A collection of methods for chemistry experiments.</p>
+	</div>
 	<h1 class="text-4xl text-text p-8 block ">Methods</h1>
 	<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 p-2 ">
 		{#each methods as method}

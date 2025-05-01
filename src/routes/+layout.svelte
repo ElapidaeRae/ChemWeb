@@ -5,7 +5,7 @@
 	export let data;
 </script>
 
-<main class="bg-background h-screen">
+<main class="bg-background h-screen overscroll-contain">
 	<LayoutBar loggedIn={data.auth} username="{data.sub}"/>
 	<slot></slot>
 	<Footer />

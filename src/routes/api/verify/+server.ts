@@ -3,8 +3,9 @@
 import { JWT_SECRET } from '$env/static/private';
 import jwt from 'jsonwebtoken';
 import { json } from '@sveltejs/kit';
+import type { RequestHandler } from './$types';
 
-export async function POST({ request, cookies }) {
+export const POST: RequestHandler = async ({ request, cookies }) => {
 	let token = cookies.get('jwt');
 	if (!token) {
 		return json({error: 'No Token'}, {status: 401});

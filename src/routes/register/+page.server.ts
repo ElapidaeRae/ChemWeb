@@ -26,7 +26,7 @@ export const actions = {
 		else if (email instanceof File || username instanceof File || password instanceof File || confirm instanceof File) {
 			return {
 				status: 418,
-				body: 'What the hell did you do?'
+				body: 'What did you do?'
 			}
 		}
 		else {
