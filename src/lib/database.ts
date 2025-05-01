@@ -132,7 +132,6 @@ export async function createMethod(username: string, name: string, description: 
 			},
 			MethodDetails: {
 				create: {
-					likes: 0,
 					CarouselImages: {
 						connectOrCreate: {
 							where: {
@@ -377,7 +376,7 @@ export async function likeMethod(methodId: string, userId: string) {
 			id: methodId
 		},
 		data: {
-			likes: {
+			Likes: {
 				connect: {
 					id: userId
 				}
@@ -399,7 +398,7 @@ export async function dislikeMethod(methodId: string, userId: string) {
 			id: methodId
 		},
 		data: {
-			likes: {
+			Likes: {
 				disconnect: {
 					id: userId
 				}

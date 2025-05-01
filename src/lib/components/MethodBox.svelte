@@ -19,7 +19,6 @@
 			raw: logo,
 			alt: 'alt text',
 		}],
-		likes: 0,
 		id: 'c264',
 		createdat: new Date().getTime(),
 	};
