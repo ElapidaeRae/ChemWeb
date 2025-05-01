@@ -49,6 +49,16 @@
 				</div>
 			</div>
 		</div>
+<!--		<div class="flex flex-col md:flex-row mt-4">-->
+<!--			<div class="bg-accent rounded-lg p-4 md:w-1/3">-->
+<!--				<h2 class="text-text text-lg font-bold">Steps</h2>-->
+<!--				{#each method.Steps as step}-->
+<!--					<div class="bg-primary rounded-lg p-2 m-2">-->
+<!--						<h3 class="text-text text-md font-semibold">{step.name}</h3>-->
+<!--						<p class="text-text text-sm">{step.description}</p>-->
+<!--					</div>-->
+<!--				{/each}-->
+<!--			</div>-->
 		<a href="/" class="bg-primary text-text rounded-lg p-2 mt-4">Back to Methods</a>
 	</main>
 </body>

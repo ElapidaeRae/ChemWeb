@@ -68,15 +68,16 @@ export async function authenticateUser(username: string, password: string) {
  * @returns An array of user objects with the given username.
  */
 export async function getUserByUsername(username: string) {
-	let results = await prisma.user.findMany({
+	let results = await prisma.user.findFirst({
 		where: {
 			username
 		}
 	})
-	if (results.length == 0){
+
+	if (results == null){
 		throw new Error('User doesn\'t exist')
 	}
-	return results[0];
+	return results;
 }
 
 
@@ -103,13 +104,14 @@ export async function getUserSettings(username: string) {
  * @param name The name of the method.
  * @param description An optional description of the method.
  * @param tagslist An optional array of tag objects to connect to the method.
+ * @param image An optional image file to connect to the method.
  * @returns The method object created in the database.
  *
  * @example
  * createMethod('cexample0id', 'Toluene', 'A toluene synthesis')
  */
 
-export async function createMethod(username: string, name: string, description: string | null, tagslist: string[] | null) {
+export async function createMethod(username: string, name: string, description: string | null, tagslist: string[] | null, image: File | null) {
 	if (!description) {
 		description = 'A method for ' + name;
 	}
@@ -131,6 +133,17 @@ export async function createMethod(username: string, name: string, description: 
 			MethodDetails: {
 				create: {
 					likes: 0,
+					CarouselImages: {
+						connectOrCreate: {
+							where: {
+								name: image?.name
+							},
+							create: {
+								name: image?.name,
+								base64: image?.base64
+							}
+						}
+					},
 					Tags: {
 						connectOrCreate: tagslist?.map(tag => ({
 							where: { name: tag },
@@ -219,17 +232,15 @@ export async function getRandomMethod(quantity: number) {
 /**
  * Creates a new method details object in the database and connects it to a method.
  * @param methodId The id of the method to connect the details to.
- * @param likes The number of likes the method has.
  * @param tags An array of tag objects to connect to the method.
  * @returns The method details object created in the database.
  *
  * @example
  * createMethodDetails('cexample0id', 3, [{name: 'Nitrogen'}, {name: 'Volatile'}, {name: 'Simple'}, {name: 'Dangerous'}])
  */
-export async function createMethodDetails(methodId: string, likes: number, tags: Tag[]) {
+export async function createMethodDetails(methodId: string, tags: Tag[]) {
 	return prisma.methodDetails.create({
 		data: {
-			likes,
 			Method: {
 				connect: {
 					id: methodId
@@ -334,4 +345,85 @@ export async function createTag(name: string) {
 			name
 		}
 	});
+}
+
+/*
+ * Creates a new image in the database.
+ * @param name The name of the image.
+ * @param base64 The base64 string of the image.
+ * @returns The image object created in the database.
+ */
+
+export async function createImage(name: string, base64: string) {
+	return prisma.image.create({
+		data: {
+			name,
+			base64
+		}
+	});
+}
+
+
+/*
+ * Creates a new like in the database.
+ * @param methodId The id of the method to like.
+ * @param userId The id of the user who liked the method.
+ * @returns The method object with the updated likes.
+ */
+
+export async function likeMethod(methodId: string, userId: string) {
+	return prisma.methodDetails.update({
+		where: {
+			id: methodId
+		},
+		data: {
+			likes: {
+				connect: {
+					id: userId
+				}
+			}
+		}
+	});
+}
+
+/*
+ * Removes a like from a method in the database.
+ * @param methodId The id of the method to unlike.
+ * @param userId The id of the user who unliked the method.
+ * @returns The method object with the updated likes.
+ */
+
+export async function dislikeMethod(methodId: string, userId: string) {
+	return prisma.methodDetails.update({
+		where: {
+			id: methodId
+		},
+		data: {
+			likes: {
+				disconnect: {
+					id: userId
+				}
+			}
+		}
+	});
+}
+
+
+export async function getUserLikes(userId: string) {
+	return prisma.user.findUnique({
+		where: {
+			id: userId
+		},
+		include: {
+			Likes: {
+				include: {
+					MethodDetails: {
+						include: {
+							Method: true
+						}
+					}
+				}
+			}
+		}
+	})
 }

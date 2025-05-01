@@ -1,6 +1,8 @@
 #import "analysis.typ"
 #import "design.typ"
 #import "solution.typ"
+#import "testing.typ"
+#import "evaluation.typ"
 
 #set document(author: "Rae Noble", title: "Rae_Noble-NEA_Document")
 
@@ -15,12 +17,12 @@
   size: 12pt
 )
 
-#show heading: set text(font: "Poppins")
+#show heading: set text(font: "Poppins", weight: "bold")
+#show heading: set heading(supplement: [document], numbering: "1.1:")
 
 #show heading.where(level: 1): it => [
-  #pagebreak()
   #set align(center)
-  #set text(fill: rgb("#ff9901"), size: 24pt)
+  #set text(fill: rgb("#ff6300"), size: 24pt)
   #emph(it)
   #v(16pt)
 ]
@@ -32,35 +34,51 @@
 ]
 
 #show heading.where(level: 3): it => [
-  #set text(size: 14pt)
+  #set text(size: 16pt)
   #emph(it)
 ]
 
 #show heading.where(level: 4): it => [
-  #set align(center)
+  #set text(size: 14pt)
   #emph(it)
+]
+
+#show heading.where(level: 5): it => [
+  #set align(center)
+  #text(it, fill: rgb("ff6366"))
 ]
 
 #set page(
   footer: context [
-    #set align(center)
-    #counter(page).display("1")
+    #counter(page).display("1 / 1", both: true)
+    #h(1fr)
+    #set text(10pt)
+    *Centre Number:* 15162
+    *Component Code:* 7517/C
   ],
   header: context [
     #set text(10pt)
     Rae Noble
+    *Candidate Number:* 3254
     #h(1fr)
-    *ChemWeb*
+    ChemWeb
   ]
 )
-
-
 
 #counter(page).update(1)
 
 #show outline.entry.where(level: 1): set block(above: 20pt)
 
-#outline()
+#outline(
+  target: heading.where(level: 1)
+  .or(heading.where(level: 2))
+  .or(heading.where(level: 3))
+  .or(heading.where(level: 4))
+  .and(heading.where(supplement: [document]))
+)
+
 #analysis
 #design
 #solution
+#testing
+#evaluation

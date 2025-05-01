@@ -1,14 +1,13 @@
 <script lang="ts">
 	import defaultImage from '$lib/Hydrazine_Conformer3D_medium.png';
 	import { logo } from '$lib/b64';
-	import { dislikeMethod, getUserByUsername, getUserLikes, likeMethod } from '$lib/database';
 
 	export let id: string;
 	export let name = 'Method Name';
 	export let description = 'Method Description';
 	export let author = 'Method Author';
 
-	export let username: string;
+
 	// Default values
 	export let MethodDetails = {
 		Tags: [
@@ -38,31 +37,7 @@
 
 
 	// Like button functionality
-	function changeLikeState() {
-	getUserByUsername(username).then(
-		(user) => {
-			if (user.id == null) {
-				alert('User not found');
-				return;
-			}
-			// Check if the user has already liked the method
-			getUserLikes(user.id).then(
-				(likes) => {
-					if (likes == null) {
-						alert('Error getting user likes');
-						return;
-					}
-					if (id in likes) {
-						// If the user has already liked the method, unlike it
-						dislikeMethod(id, user.id)
-					} else {
-						likeMethod(id, user.id);
-					}
-				}
-			)
-		}
-	);
-	}
+	
 </script>
 
 <div class="p-2 break-inside-avoid">

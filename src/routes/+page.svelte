@@ -19,6 +19,7 @@
 	// console.log('Data: ' + JSON.stringify(methods[0].MethodDetails));
 
 
+
 </script>
 
 <body class="bg-background min-h-screen">

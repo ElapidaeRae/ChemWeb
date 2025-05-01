@@ -1,5 +1,6 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["typedSql"]
 }
 
 datasource db {
@@ -8,16 +9,17 @@ datasource db {
 }
 
 model User {
-  id             String        @id @default(cuid())
-  email          String        @unique
+  id             String          @id @default(cuid())
+  email          String          @unique
   username       String?
   password       String
-  createdat      DateTime      @default(now())
-  role           String        @default("user")
-  Comment        Comment[]     @relation("CommentToUser")
-  Createdmethods Method[]      @relation("MethodToUser")
-  Profile        Profile?      @relation("ProfileToUser")
-  Settings       UserSettings? @relation("UserToUserSettings")
+  createdat      DateTime        @default(now())
+  role           String          @default("user")
+  Comment        Comment[]       @relation("CommentToUser")
+  Createdmethods Method[]        @relation("MethodToUser")
+  Profile        Profile?        @relation("ProfileToUser")
+  Settings       UserSettings?   @relation("UserToUserSettings")
+  Likes          MethodDetails[] @relation("MethodDetailsToUser")
 }
 
 model Method {
@@ -40,7 +42,7 @@ model Method {
 model MethodDetails {
   id             String   @id @default(cuid())
   createdat      DateTime @default(now())
-  likes          Int      @default(0)
+  Likes          User[]   @relation("MethodDetailsToUser")
   CarouselImages Image[]  @relation("ImagesToMethodDetails")
   Method         Method?  @relation("MethodToMethodDetails")
   Forks          Method[] @relation("MethodToMethodDetailsforks")
@@ -98,8 +100,8 @@ model Comment {
 
 model Image {
   id              String        @id @default(cuid())
-  raw             Bytes?
-  alt             String?
+  base64          String
+  name            String?
   methodDetailsId String
   MethodDetails   MethodDetails @relation("ImagesToMethodDetails", fields: [methodDetailsId], references: [id])
 }
