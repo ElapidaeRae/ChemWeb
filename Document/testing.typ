@@ -1,4 +1,5 @@
 = Testing
+// TODO: Record test video and add to the report with timestamps
 
 #table(
   columns: 3,

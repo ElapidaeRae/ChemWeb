@@ -15,10 +15,6 @@
 		throw new Error('No methods received');
 	}
 	let methods = data.data;
-	// console.log('Data: ' + JSON.stringify(methods))
-	// console.log('Data: ' + JSON.stringify(methods[0].MethodDetails));
-
-
 
 </script>
 
@@ -31,9 +27,9 @@
 	<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 p-2 ">
 		{#each methods as method}
 			{#if (method.description != null)}
-				<MethodBox id={method.id} name={method.name} description={method.description} MethodDetails={method.MethodDetails}></MethodBox>
+				<MethodBox id={method.id} name={method.name} description={method.description} MethodDetails={method.MethodDetails} author={method.Creator.username}></MethodBox>
 			{:else}
-				 <MethodBox id={method.id} name={method.name} description="No description available" MethodDetails={method.MethodDetails}></MethodBox>
+				 <MethodBox id={method.id} name={method.name} description="No description available" MethodDetails={method.MethodDetails} author={method.Creator.username}></MethodBox>
 			{/if}
 		{/each}
 	</div>

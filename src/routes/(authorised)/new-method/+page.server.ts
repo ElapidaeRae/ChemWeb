@@ -5,7 +5,7 @@ import type { Actions } from '@sveltejs/kit';
 import { JWT_SECRET } from '$env/static/private';
 
 export const actions = {
-	default: async ({request , cookies} ) => {
+	default: async ({request, cookies} ) => {
 		// Get the form data
 		const data = await request.formData();
 		console.log('New Method Data: ' + JSON.stringify(data));
@@ -26,16 +26,7 @@ export const actions = {
 			tagslist = tagdata.split(',');
 		}
 		let image = data.get('image');
-		console.log(image)
-		// Convert the image to base64
-		let base64Image;
-		if (image) {
-			const reader = new FileReader();
-			reader.readAsDataURL(image);
-			reader.onload = () => {
-				base64Image = reader.result;
-			};
-		}
+
 		// get all the data from the form called 'step'
 		let steps = [];
 		let i = 1;
@@ -58,7 +49,7 @@ export const actions = {
 		// Get the user's id by first decoding the JWT token
 		let username = authed.sub
 		// Create the method in the database
-		let method = await createMethod(username, name, description, tagslist);
+		let method = await createMethod(username, name, description, tagslist, image);
 		// Add the steps to the method
 		for (const step of steps) {
 			if (!step.name || !step.description) {

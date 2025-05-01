@@ -1,6 +1,7 @@
 import { prisma } from '$lib/prisma';
 import argon2 from 'argon2';
 import type { Tag, Method } from '@prisma/client'
+import { logo } from '$lib/b64';
 
 /**
  * Creates a new user in the database.
@@ -20,7 +21,10 @@ export async function createUser(username: string, email: string, password: stri
 	const hashedPassword = await argon2.hash(password);
 
 	// check if user already exists
-	let user = await getUserByUsername(username);
+	let user = await getUserByUsername(username).catch(
+		() => null
+	);
+
 	if (user) {
 		throw new Error('Database Error');
 	}
@@ -120,7 +124,19 @@ export async function createMethod(username: string, name: string, description: 
 	if (user == null) {
 		throw new Error('User doesn\'t exist');
 	}
-
+	let base64Image;
+	if (image) {
+			const reader = new FileReader();
+			reader.readAsDataURL(image);
+			reader.onload = () => {
+				base64Image = reader.result;
+			};
+	} else {
+		image = {
+			name: 'default',
+			base64: logo
+		};
+	}
 	return prisma.method.create({
 		data: {
 			name,
@@ -135,11 +151,11 @@ export async function createMethod(username: string, name: string, description: 
 					CarouselImages: {
 						connectOrCreate: {
 							where: {
-								name: image?.name
+								base64: base64Image
 							},
 							create: {
 								name: image?.name,
-								base64: image?.base64
+								base64: base64Image
 							}
 						}
 					},
@@ -409,7 +425,7 @@ export async function dislikeMethod(methodId: string, userId: string) {
 
 
 export async function getUserLikes(userId: string) {
-	return prisma.user.findUnique({
+	return prisma.user.findMany({
 		where: {
 			id: userId
 		},
@@ -425,4 +441,17 @@ export async function getUserLikes(userId: string) {
 			}
 		}
 	})
+}
+
+export async function getLikesCount(methodId: string) {
+	return prisma.methodDetails.findUnique({
+		where: {
+			id: methodId
+		},
+		include: {
+			_count: {
+				select: {Likes: true}
+			}
+		}
+	});
 }

@@ -10,26 +10,14 @@
 		});
 	});
 
-	// export const method = {
-	// 	id: 'ctestestestest',
-	// 	name: 'Hydrazine',
-	// 	description: 'A simple method for synthesizing hydrazine from ammonia and bleach.',
-	// 	MethodDetails: {
-	// 		tags: ['Nitrogen', 'Volatile'],
-	// 		picture: {raw: '/src/lib/Hydrazine_Conformer3D_medium.png'},
-	// 		date: 1633046400000,
-	// 	},
-	// 	Creator: {
-	// 		id: 'c153456',
-	// 		name: 'John Chemistry',
-	// 	},
-	// };
-
 	export let data;
-	console.log(data.data)
-	let method = data.data;
+	let method = data.data.method;
+	let methodSteps = data.data.steps;
+	let userId = data.data.userId;
 
 	let datetime = new Date(method.MethodDetails.createdat).toLocaleDateString();
+
+
 </script>
 
 
@@ -48,17 +36,25 @@
 					{/each}
 				</div>
 			</div>
+<!--			Like button should go here-->
+<!--			<button class="bg-accent rounded-lg p-4 md:w-1/3" on:click={handleLike}>-->
+<!--				<span class="text-text text-lg font-bold">Likes</span>-->
+<!--				<span class="text-text text-sm">Likes</span>-->
+<!--			</button>-->
 		</div>
-<!--		<div class="flex flex-col md:flex-row mt-4">-->
-<!--			<div class="bg-accent rounded-lg p-4 md:w-1/3">-->
-<!--				<h2 class="text-text text-lg font-bold">Steps</h2>-->
-<!--				{#each method.Steps as step}-->
-<!--					<div class="bg-primary rounded-lg p-2 m-2">-->
-<!--						<h3 class="text-text text-md font-semibold">{step.name}</h3>-->
-<!--						<p class="text-text text-sm">{step.description}</p>-->
-<!--					</div>-->
-<!--				{/each}-->
-<!--			</div>-->
-		<a href="/" class="bg-primary text-text rounded-lg p-2 mt-4">Back to Methods</a>
+		<div class="flex flex-col md:flex-row my-4">
+			<div class="border border-accent rounded-lg p-4 md:w-1/3">
+				<h2 class="text-text text-lg font-bold">Steps</h2>
+				{#each methodSteps as step}
+					<div class="bg-primary rounded-lg p-2 m-2">
+						<h3 class="text-text text-md font-semibold">{step.name}</h3>
+						<p class="text-text text-sm">{step.description}</p>
+					</div>
+				{/each}
+				<p class="text-text text-sm">Total Steps: {methodSteps.length}</p>
+			</div>
+		</div>
+
+		<a href="/" class="bg-primary text-text rounded-lg p-2 mt-10">Back to Methods</a>
 	</main>
 </body>

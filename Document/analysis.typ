@@ -1,20 +1,22 @@
 #pagebreak()
 = Analysis
 
+// TODO: Make UI Mockups
+
 == Introduction
-ChemWeb is a website that allows users to create and share methods for chemical reactions. 
+ChemWeb is a website that allows users to create and share methods for chemical reactions. It is designed to be a community-driven platform that allows users to share their knowledge and expertise with others. It provides a centralised source utilising a database to store methods and user accounts.
 
 == Description
 A website that can keep track of the ingredients and processes needed for a reaction, as written by a user of the platform.
 
-An inspiration for this project were websites like Thingiverse, Instructables and Thangs; websites that allow users to share their creations with the world. These websites allow their users to upload and share the things that they have designed such as `.stl` files, 3d models or instructions for other people to use and learn from.
+Some inspirations for this project were websites like Thingiverse, Instructables and Thangs; allowing users to share their creations with the world, be they `.stl` files, 3d models or instructions for other people to use and learn from.
 
 #figure(
   image("Thingiverse.png", width: 90%),
   caption: [Thingiverse],
 )
 
-Like Thingiverse for chemistry, allowing users to save and share methods for various reactions and syntheses. ChemWeb aims to cultivate a community of users that would allow methods to be improved over time with constant iteration.
+Like Thingiverse for chemistry, allowing users to save and share methods for various reactions and syntheses, ChemWeb aims to cultivate a community of users that would allow methods to be improved over time with constant iteration.
 
 No similar website seems to exist to fit this specific niche. ChemWeb provides a novel solution to a hitherto untouched problem, creating a central repository for methods to create chemicals.
 
@@ -92,12 +94,16 @@ Tailwind is also optimised to minimise the size of the CSS file that needs to be
 == Objectives
 
 + Allow users to access the website without an account.
-+ Allow users of the website to have an account
++ Create a registration page that allows users to create an account.
++ Allow access to a login page that allows users to log in to their account.
++ Allow users to log out of their account.
+
 + Allow users to log in to their account to have their activity associated with them.
 + Let users browse available methods on the front page.
 + Let users create their own methods.
 + Allow users to edit and delete their methods.
-+ Allow a user to like methods, thereby promoting them within the website.
-+ Allow users to comment on methods.
++ Allow a user to add a 'like' to methods.
++ Record the number of 'likes' on a given method.
+
 
 

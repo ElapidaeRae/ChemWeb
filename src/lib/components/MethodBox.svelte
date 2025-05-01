@@ -6,7 +6,7 @@
 	export let name = 'Method Name';
 	export let description = 'Method Description';
 	export let author = 'Method Author';
-
+	export let methodLikes = 0;
 
 	// Default values
 	export let MethodDetails = {
@@ -34,8 +34,6 @@
 		alt = MethodDetails.CarouselImages[0].alt;
 	}
 
-
-	// Like button functionality
 	
 </script>
 
@@ -44,6 +42,7 @@
 		<div class="bg-secondary w-full rounded-lg p-4 ring ring-accent">
 			<h2 class="text-text text-lg font-bold tracking-wide">{name}</h2>
 			<p class="text-text text-sm">by {author}</p>
+			<p class="text-text text-sm border-secondary">Likes: {methodLikes}</p>
 			<img src={picture} alt={alt} class="w-full h-64 object-none overflow-clip" />
 			<p class="text-text text-sm line-clamp-4">{description}</p>
 			<div class="flex flex-wrap">
@@ -53,8 +52,4 @@
 			</div>
 		</div>
 	</a>
-<!--		<div class="flex flex-row justify-between items-center">-->
-<!--			<button class="bg-primary text-text rounded-lg p-2 mt-4" on:click={changeLikeState}>Like</button>-->
-<!--			<p class="text-text text-sm">{MethodDetails.likes} Likes</p>-->
-<!--		</div>-->
 </div>

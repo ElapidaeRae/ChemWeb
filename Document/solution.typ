@@ -63,6 +63,10 @@ This route contains the server-side functionality for verifying JWTs that confir
 
 #file("src/routes/api/verify/+server.ts")
 
+This route contains the functionality for liking methods on the website. It is a server-side route that is used to update the number of likes on a method.
+
+#file("src/routes/api/like/+server.ts")
+
 #heading([/contact-us], level: 5)
 #file("src/routes/contact-us/+page.svelte")
 
@@ -82,7 +86,6 @@ The logout route contains the functionality for logging out the user by deleting
 #heading([/method:[methodID=id]], level: 5)
 #file("src/routes/method:[methodID=id]/+page.server.ts")
 #file("src/routes/method:[methodID=id]/+page.svelte")
-#file("src/routes/method:[methodID=id]/+server.ts")
 
 #heading([/register], level: 5)
 The register page is the page that the user will be taken to when they click the register button on the navbar. It contains a form that allows the user to enter their username and password in order to create a new account. If they already have an account, they can click the login button to be taken to the login page.
@@ -120,7 +123,6 @@ Everything in the `/(authorised)` route requires the user to be logged in first 
 #file("src/lib/components/MethodBox.svelte")
 #file("src/lib/components/ProfileMenu.svelte")
 #file("src/lib/components/SearchBarGeneric.svelte")
-#file("src/lib/components/StepForm.svelte")
 
 #heading([/params], level: 4)
 

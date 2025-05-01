@@ -1,7 +1,6 @@
 <script lang="ts">
 	// New method creation page
 	import { enhance } from "$app/forms";
-	import StepForm from '$lib/components/StepForm.svelte';
 	export let form;
 	let steps = 1;
 </script>
@@ -43,7 +42,13 @@
 
 			</div>
 			{#each Array(steps) as _, i}
-				<StepForm ordinal={i + 1} />
+				<div class="flex p-2 w-full">
+					<label for="stepname{i+1}" class="text-lg font-semibold text-gray-900 mr-2">Step {i+1} Name:</label>
+					<input type="text" id="stepname{i+1}" name="stepname{i+1}" class="p-2 rounded-md" required />
+
+					<label for="stepdesc{i+1}" class="text-lg font-semibold text-gray-900 mr-2">Step {i+1} Description:</label>
+					<textarea id="stepdesc{i+1}" name="stepdesc{i+1}" class="p-2 rounded-md" required />
+				</div>
 			{/each}
 
 			{#if form?.error}
