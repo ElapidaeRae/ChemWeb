@@ -158,7 +158,7 @@ The many-to-many relationships in the ERD have been omitted for clarity, but the
 
 The `Method` model contains the data for the methods that are displayed on the website. It contains a title, description, author, images and a list of steps that can be followed to replicate the method.
 
-The method model also contains a list of tags that can be used to search for methods. The tags are stored in a separate table and linked to the method using a many-to-many relationship. This allows for easy searching and filtering of methods based on their tags.
+The method model also contains a list of tags that can be used to narrow down the theming of the methods. This is useful for searching for methods that are related to a specific chemical reaction or process. The tags are stored in a separate table and linked to the method using a many-to-many relationship. This allows for easy searching and filtering of methods based on their tags.
 
 The file `database.ts` contains the code used to interact with the database. It contains the Prisma client that is used to query the database and create new records. A function like `getMethodByID` would be used by passing the method ID in to get all of the needed information for the method page. The `getRandomMethod` function would be used to get a random method from the database to display on the front page. 
 All of the functionality for the database is contained in this file then imported into the server files that require specific access to parts of the database.
